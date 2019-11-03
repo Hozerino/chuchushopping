@@ -1,8 +1,8 @@
 package ws.service;
 
 import org.apache.jena.ontology.Individual;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ws.helper.OntologyHelper;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -20,19 +20,16 @@ public class NavigationService {
 //		space.getProperty(p);
     List<Individual> ground;
 
-    @Autowired
-    OntologyService ontologyService;
-
     @PostConstruct
     private void postConstruct() {
-        List<Individual> ground = ontologyService.getAllIndividualsOfType("Space");
+        List<Individual> ground = OntologyHelper.getAllIndividualsOfType("Space");
         // montar a matrix vai ser pica, se eh q vai ser feito assim
     }
 
     // vai receber a URI de uma loja e vai achar o caminho mais curto ate qualquer chao daquela loja
     public List<Individual> pathTo(Individual store) {
         // soh tem um, se n achar eh pq o mapa ta um lixo
-        Individual startingPoint = ontologyService.getAllIndividualsOfType("CommercialCenter").get(0);
+        Individual startingPoint = OntologyHelper.getAllIndividualsOfType("CommercialCenter").get(0);
         // TODO vai que eh tua, cabecao
         return null;
     }

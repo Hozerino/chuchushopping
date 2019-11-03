@@ -298,9 +298,10 @@
 :Americanas rdf:type :Store ,
                      owl:NamedIndividual ;
             
-            :telephone "1189478456"^^xsd:string ;
+            rdfs:label """Americanas
+""" ;
             
-            rdfs:comment "Marabraz"^^xsd:string ;
+            :telephone "1189478456"^^xsd:string ;
             
             :website "www.americanas.com.br"^^xsd:string ;
             
@@ -327,11 +328,11 @@
 :Brenno_Cremonini rdf:type :User ,
                            owl:NamedIndividual ;
                   
+                  rdfs:label "Brenno Cremonini"^^xsd:string ;
+                  
                   :celphone "11975996500"^^xsd:string ;
                   
                   :cpf "12345678905"^^xsd:string ;
-                  
-                  rdfs:comment "Brenno Cremonini"^^xsd:string ;
                   
                   :likes :Comida ,
                          :Eletronicos .
@@ -554,11 +555,11 @@
 :Danilo_Dainez rdf:type :User ,
                         owl:NamedIndividual ;
                
+               rdfs:label "Danilo Dainez"^^xsd:string ;
+               
                :celphone "11927556412"^^xsd:string ;
                
                :cpf "36423893907"^^xsd:string ;
-               
-               rdfs:comment "Danilo Dainez"^^xsd:string ;
                
                :likes :Celular ,
                       :Roupa .
@@ -646,9 +647,9 @@
 :Gendai rdf:type :Store ,
                  owl:NamedIndividual ;
         
-        :website "1196452378"^^xsd:string ;
+        rdfs:label "Gendai"^^xsd:string ;
         
-        rdfs:comment "Gendai"^^xsd:string ;
+        :telephone "1196452378"^^xsd:string ;
         
         :website "www.gendai.com"^^xsd:string ;
         
@@ -661,11 +662,11 @@
 :Guilherme_Coppini rdf:type :User ,
                             owl:NamedIndividual ;
                    
+                   rdfs:label "Guilherme Coppini"^^xsd:string ;
+                   
                    :celphone "11996547844"^^xsd:string ;
                    
                    :cpf "98765431227"^^xsd:string ;
-                   
-                   rdfs:comment "Guilherme Coppini"^^xsd:string ;
                    
                    :likes :Maquiagem ,
                           :Moveis .
@@ -806,9 +807,9 @@
 :Marabraz rdf:type :Store ,
                    owl:NamedIndividual ;
           
-          :telephone "1165237845"^^xsd:string ;
+          rdfs:label "Marabraz"^^xsd:string ;
           
-          rdfs:comment "Marabraz"^^xsd:string ;
+          :telephone "1165237845"^^xsd:string ;
           
           :website "www.marabraz.com.br"^^xsd:string ;
           
@@ -1006,9 +1007,9 @@
 :Xiaomi rdf:type :Store ,
                  owl:NamedIndividual ;
         
-        :telephone "1156891245"^^xsd:string ;
+        rdfs:label "Xiaomi"^^xsd:string ;
         
-        rdfs:comment "Xiaomi"^^xsd:string ;
+        :telephone "1156891245"^^xsd:string ;
         
         :website "www.xiaomi.ch"^^xsd:string ;
         
