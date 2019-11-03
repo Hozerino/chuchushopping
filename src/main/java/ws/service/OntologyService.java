@@ -2,11 +2,14 @@ package ws.service;
 
 import org.apache.jena.JenaRuntime;
 import org.apache.jena.atlas.json.JsonArray;
+import org.apache.jena.ontology.Individual;
+import org.apache.jena.ontology.OntModel;
 import org.apache.jena.ontology.OntModelSpec;
 import org.apache.jena.query.*;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.sparql.engine.QueryEngineFactory;
 import org.springframework.stereotype.Component;
 import ws.WsApplication;
@@ -14,6 +17,7 @@ import ws.WsApplication;
 import javax.annotation.PostConstruct;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.util.List;
 import java.util.Objects;
 
 @Component
@@ -45,6 +49,11 @@ public class OntologyService {
         ResultSet res = qe.execSelect();
 
         return toJson(res);
+    }
+
+    public List<Individual> getAllIndividualsOfType(String type) {
+        Resource clazz = model.getResource(schema + type);
+        return ((OntModel) model).listIndividuals().toList();
     }
 
     private String toJson(ResultSet resultSet) {
