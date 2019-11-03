@@ -1,0 +1,1035 @@
+@prefix : <http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2> .
+
+<http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2> rdf:type owl:Ontology .
+
+
+#################################################################
+#
+#    Object Properties
+#
+#################################################################
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#belongsTo
+
+:belongsTo rdf:type owl:FunctionalProperty ,
+                    owl:ObjectProperty ;
+           
+           rdfs:range :Store ;
+           
+           rdfs:domain :Walkable .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#bottomOf
+
+:bottomOf rdf:type owl:FunctionalProperty ,
+                   owl:InverseFunctionalProperty ,
+                   owl:ObjectProperty ;
+          
+          rdfs:range :Space ;
+          
+          rdfs:domain :Space ;
+          
+          owl:inverseOf :topOf .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#buys
+
+:buys rdf:type owl:ObjectProperty ;
+      
+      rdfs:range :Product ;
+      
+      rdfs:domain :User .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#connects
+
+:connects rdf:type owl:ObjectProperty ,
+                   owl:SymmetricProperty ;
+          
+          rdfs:range :Gateway ;
+          
+          rdfs:domain :Gateway .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#hasCategory
+
+:hasCategory rdf:type owl:ObjectProperty ;
+             
+             rdfs:range :Category ;
+             
+             rdfs:domain :Product .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#leftOf
+
+:leftOf rdf:type owl:FunctionalProperty ,
+                 owl:InverseFunctionalProperty ,
+                 owl:ObjectProperty ;
+        
+        rdfs:domain :Space ;
+        
+        rdfs:range :Space ;
+        
+        owl:inverseOf :rightOf .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#likes
+
+:likes rdf:type owl:ObjectProperty ;
+       
+       rdfs:range :Category ;
+       
+       rdfs:domain :User .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#rightOf
+
+:rightOf rdf:type owl:FunctionalProperty ,
+                  owl:InverseFunctionalProperty ,
+                  owl:ObjectProperty ;
+         
+         rdfs:range :Space ;
+         
+         rdfs:domain :Space .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#sells
+
+:sells rdf:type owl:ObjectProperty ;
+       
+       rdfs:range :Product ;
+       
+       rdfs:domain :Store .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#topOf
+
+:topOf rdf:type owl:FunctionalProperty ,
+                owl:InverseFunctionalProperty ,
+                owl:ObjectProperty ;
+       
+       rdfs:range :Space ;
+       
+       rdfs:domain :Space .
+
+
+
+
+
+#################################################################
+#
+#    Data properties
+#
+#################################################################
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#celphone
+
+:celphone rdf:type owl:DatatypeProperty ;
+          
+          rdfs:domain :User ;
+          
+          rdfs:range xsd:string .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#cpf
+
+:cpf rdf:type owl:DatatypeProperty ;
+     
+     rdfs:domain :User ;
+     
+     rdfs:range xsd:string .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#floor
+
+:floor rdf:type owl:DatatypeProperty ,
+                owl:FunctionalProperty ;
+       
+       rdfs:domain :Space ;
+       
+       rdfs:range xsd:integer .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#price
+
+:price rdf:type owl:DatatypeProperty ;
+       
+       rdfs:domain :Product ;
+       
+       rdfs:range xsd:double .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#telephone
+
+:telephone rdf:type owl:DatatypeProperty ;
+           
+           rdfs:domain :Store ;
+           
+           rdfs:range xsd:string .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#website
+
+:website rdf:type owl:DatatypeProperty ;
+         
+         rdfs:domain :Store ;
+         
+         rdfs:range xsd:string .
+
+
+
+
+
+#################################################################
+#
+#    Classes
+#
+#################################################################
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Category
+
+:Category rdf:type owl:Class .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#CommercialCenter
+
+:CommercialCenter rdf:type owl:Class ;
+                  
+                  rdfs:subClassOf :Walkable ;
+                  
+                  rdfs:comment "Local que sera utilizado como base para guiar o usuario ate uma loja" .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Gateway
+
+:Gateway rdf:type owl:Class ;
+         
+         rdfs:subClassOf :Walkable .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Obstacle
+
+:Obstacle rdf:type owl:Class ;
+          
+          rdfs:subClassOf :Space ;
+          
+          owl:disjointWith :Walkable ;
+          
+          rdfs:comment "Local que nao pode ser caminhado sobre, como uma fonte, por exemplo" .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Product
+
+:Product rdf:type owl:Class ;
+         
+         rdfs:comment """Produto vendido pela loja e pode ser comprado pelo usuario
+""" .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Space
+
+:Space rdf:type owl:Class ;
+       
+       rdfs:comment "Unidade de espaco, sera utilizada para a navegacao" .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Store
+
+:Store rdf:type owl:Class .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#User
+
+:User rdf:type owl:Class .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Walkable
+
+:Walkable rdf:type owl:Class ;
+          
+          rdfs:subClassOf :Space ;
+          
+          rdfs:comment "Chao em geral, que pode pertencer ao interior de uma loja" .
+
+
+
+
+
+#################################################################
+#
+#    Individuals
+#
+#################################################################
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Americanas
+
+:Americanas rdf:type :Store ,
+                     owl:NamedIndividual ;
+            
+            :telephone "1189478456"^^xsd:string ;
+            
+            rdfs:comment "Marabraz"^^xsd:string ;
+            
+            :website "www.americanas.com.br"^^xsd:string ;
+            
+            :sells :Base_Mary_Kay ,
+                   :Camiseta_GNU .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Base_Mary_Kay
+
+:Base_Mary_Kay rdf:type :Product ,
+                        owl:NamedIndividual ;
+               
+               rdfs:label "Base Mary Kay"^^xsd:string ;
+               
+               :price "29.9"^^xsd:double ;
+               
+               :hasCategory :Maquiagem .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Brenno_Cremonini
+
+:Brenno_Cremonini rdf:type :User ,
+                           owl:NamedIndividual ;
+                  
+                  :celphone "11975996500"^^xsd:string ;
+                  
+                  :cpf "12345678905"^^xsd:string ;
+                  
+                  rdfs:comment "Brenno Cremonini"^^xsd:string ;
+                  
+                  :likes :Comida ,
+                         :Eletronicos .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Camiseta_GNU
+
+:Camiseta_GNU rdf:type :Product ,
+                       owl:NamedIndividual ;
+              
+              rdfs:label "Camiseta GNU"^^xsd:string ;
+              
+              :price "99.99"^^xsd:double ;
+              
+              :hasCategory :Roupa .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Celular
+
+:Celular rdf:type :Category ,
+                  owl:NamedIndividual ;
+         
+         rdfs:label "Celular"^^xsd:string .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Comida
+
+:Comida rdf:type :Category ,
+                 owl:NamedIndividual ;
+        
+        rdfs:label "Comida"^^xsd:string .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Corredor1-1
+
+:Corredor1-1 rdf:type :Walkable ,
+                      owl:NamedIndividual ;
+             
+             :floor 1 ;
+             
+             :leftOf :Corredor1-2 ;
+             
+             :bottomOf :Corredor1-4 .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Corredor1-2
+
+:Corredor1-2 rdf:type :Walkable ,
+                      owl:NamedIndividual ;
+             
+             :floor 1 .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Corredor1-3
+
+:Corredor1-3 rdf:type :Walkable ,
+                      owl:NamedIndividual ;
+             
+             :floor 1 ;
+             
+             :rightOf :Corredor1-2 ;
+             
+             :bottomOf :Corredor1-5 .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Corredor1-4
+
+:Corredor1-4 rdf:type :Walkable ,
+                      owl:NamedIndividual ;
+             
+             :floor 1 ;
+             
+             :bottomOf :Corredor1-6 .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Corredor1-5
+
+:Corredor1-5 rdf:type :Walkable ,
+                      owl:NamedIndividual ;
+             
+             :floor 1 ;
+             
+             :bottomOf :Corredor1-8 .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Corredor1-6
+
+:Corredor1-6 rdf:type :Walkable ,
+                      owl:NamedIndividual ;
+             
+             :floor 1 ;
+             
+             :leftOf :Corredor1-7 .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Corredor1-7
+
+:Corredor1-7 rdf:type :Walkable ,
+                      owl:NamedIndividual ;
+             
+             :floor 1 .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Corredor1-8
+
+:Corredor1-8 rdf:type :Walkable ,
+                      owl:NamedIndividual ;
+             
+             :floor 1 ;
+             
+             :rightOf :Corredor1-7 ;
+             
+             :leftOf :Elevador1 .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Corredor2-1
+
+:Corredor2-1 rdf:type :Walkable ,
+                      owl:NamedIndividual ;
+             
+             :floor 2 ;
+             
+             :leftOf :Corredor2-2 ;
+             
+             :bottomOf :Corredor2-4 .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Corredor2-2
+
+:Corredor2-2 rdf:type :Walkable ,
+                      owl:NamedIndividual ;
+             
+             :floor 2 .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Corredor2-3
+
+:Corredor2-3 rdf:type :Walkable ,
+                      owl:NamedIndividual ;
+             
+             :floor 2 ;
+             
+             :rightOf :Corredor2-2 ;
+             
+             :bottomOf :Corredor2-5 .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Corredor2-4
+
+:Corredor2-4 rdf:type :Walkable ,
+                      owl:NamedIndividual ;
+             
+             :floor 2 ;
+             
+             :bottomOf :Corredor2-6 .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Corredor2-5
+
+:Corredor2-5 rdf:type :Walkable ,
+                      owl:NamedIndividual ;
+             
+             :floor 2 ;
+             
+             :bottomOf :Corredor2-8 .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Corredor2-6
+
+:Corredor2-6 rdf:type :Walkable ,
+                      owl:NamedIndividual ;
+             
+             :floor 2 ;
+             
+             :leftOf :Corredor2-7 .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Corredor2-7
+
+:Corredor2-7 rdf:type :Walkable ,
+                      owl:NamedIndividual ;
+             
+             :floor 2 .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Corredor2-8
+
+:Corredor2-8 rdf:type :Walkable ,
+                      owl:NamedIndividual ;
+             
+             :floor 2 ;
+             
+             :rightOf :Corredor2-7 ;
+             
+             :leftOf :Elevador2 .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Danilo_Dainez
+
+:Danilo_Dainez rdf:type :User ,
+                        owl:NamedIndividual ;
+               
+               :celphone "11927556412"^^xsd:string ;
+               
+               :cpf "36423893907"^^xsd:string ;
+               
+               rdfs:comment "Danilo Dainez"^^xsd:string ;
+               
+               :likes :Celular ,
+                      :Roupa .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Eletronicos
+
+:Eletronicos rdf:type :Category ,
+                      owl:NamedIndividual ;
+             
+             rdfs:label "Eletronicos"^^xsd:string .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Elevador1
+
+:Elevador1 rdf:type :Gateway ,
+                    owl:NamedIndividual ;
+           
+           :floor 1 ;
+           
+           :connects :Elevador2 .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Elevador2
+
+:Elevador2 rdf:type :Gateway ,
+                    owl:NamedIndividual ;
+           
+           :floor 2 .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Escrivaninha_de_Madeira
+
+:Escrivaninha_de_Madeira rdf:type :Product ,
+                                  owl:NamedIndividual ;
+                         
+                         rdfs:label "Escrivaninha de Madeira"^^xsd:string ;
+                         
+                         :price "599.79"^^xsd:double ;
+                         
+                         :hasCategory :Moveis .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Fonte1-1
+
+:Fonte1-1 rdf:type :Obstacle ,
+                   owl:NamedIndividual ;
+          
+          :floor 1 ;
+          
+          :topOf :Corredor1-2 ;
+          
+          :rightOf :Corredor1-4 ;
+          
+          :leftOf :Corredor1-5 ;
+          
+          :bottomOf :Corredor1-7 .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Fonte2-1
+
+:Fonte2-1 rdf:type :Obstacle ,
+                   owl:NamedIndividual ;
+          
+          :floor 2 ;
+          
+          :topOf :Corredor2-2 ;
+          
+          :rightOf :Corredor2-4 ;
+          
+          :leftOf :Corredor2-5 ;
+          
+          :bottomOf :Corredor2-7 .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Gendai
+
+:Gendai rdf:type :Store ,
+                 owl:NamedIndividual ;
+        
+        :website "1196452378"^^xsd:string ;
+        
+        rdfs:comment "Gendai"^^xsd:string ;
+        
+        :website "www.gendai.com"^^xsd:string ;
+        
+        :sells :Misso_Ramen .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Guilherme_Coppini
+
+:Guilherme_Coppini rdf:type :User ,
+                            owl:NamedIndividual ;
+                   
+                   :celphone "11996547844"^^xsd:string ;
+                   
+                   :cpf "98765431227"^^xsd:string ;
+                   
+                   rdfs:comment "Guilherme Coppini"^^xsd:string ;
+                   
+                   :likes :Maquiagem ,
+                          :Moveis .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Loja1-1.1
+
+:Loja1-1.1 rdf:type :Walkable ,
+                    owl:NamedIndividual ;
+           
+           :floor 1 ;
+           
+           :belongsTo :Americanas ;
+           
+           :leftOf :Corredor1-4 ;
+           
+           :bottomOf :Loja1-1.2 ;
+           
+           :topOf :Parede1-5 .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Loja1-1.2
+
+:Loja1-1.2 rdf:type :Walkable ,
+                    owl:NamedIndividual ;
+           
+           :floor 1 ;
+           
+           :belongsTo :Americanas ;
+           
+           :leftOf :Corredor1-6 .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Loja1-2.1
+
+:Loja1-2.1 rdf:type :Walkable ,
+                    owl:NamedIndividual ;
+           
+           :floor 1 ;
+           
+           :rightOf :Corredor1-3 ;
+           
+           :bottomOf :Loja1-2.2 ;
+           
+           :belongsTo :Xiaomi .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Loja1-2.2
+
+:Loja1-2.2 rdf:type :Walkable ,
+                    owl:NamedIndividual ;
+           
+           :floor 1 ;
+           
+           :rightOf :Corredor1-5 ;
+           
+           :bottomOf :Elevador1 ;
+           
+           :belongsTo :Xiaomi .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Loja2-1.1
+
+:Loja2-1.1 rdf:type :Walkable ,
+                    owl:NamedIndividual ;
+           
+           :floor 2 ;
+           
+           :belongsTo :Americanas ;
+           
+           :leftOf :Corredor2-4 ;
+           
+           :bottomOf :Loja2-1.2 ;
+           
+           :topOf :Parede2-5 .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Loja2-1.2
+
+:Loja2-1.2 rdf:type :Walkable ,
+                    owl:NamedIndividual ;
+           
+           :floor 2 ;
+           
+           :belongsTo :Americanas ;
+           
+           :leftOf :Corredor2-6 .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Loja2-2.1
+
+:Loja2-2.1 rdf:type :Walkable ,
+                    owl:NamedIndividual ;
+           
+           :floor 2 ;
+           
+           :rightOf :Corredor2-3 ;
+           
+           :bottomOf :Loja2-2.2 ;
+           
+           :belongsTo :Xiaomi .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Loja2-2.2
+
+:Loja2-2.2 rdf:type :Walkable ,
+                    owl:NamedIndividual ;
+           
+           :floor 2 ;
+           
+           :rightOf :Corredor2-5 ;
+           
+           :bottomOf :Elevador2 ;
+           
+           :belongsTo :Xiaomi .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Maquiagem
+
+:Maquiagem rdf:type :Category ,
+                    owl:NamedIndividual ;
+           
+           rdfs:label "Maquiagem"^^xsd:string .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Marabraz
+
+:Marabraz rdf:type :Store ,
+                   owl:NamedIndividual ;
+          
+          :telephone "1165237845"^^xsd:string ;
+          
+          rdfs:comment "Marabraz"^^xsd:string ;
+          
+          :website "www.marabraz.com.br"^^xsd:string ;
+          
+          :sells :Escrivaninha_de_Madeira .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Misso_Ramen
+
+:Misso_Ramen rdf:type :Product ,
+                      owl:NamedIndividual ;
+             
+             rdfs:label "Misso Ramen"^^xsd:string ;
+             
+             :price "44.59"^^xsd:double ;
+             
+             :hasCategory :Comida .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Moveis
+
+:Moveis rdf:type :Category ,
+                 owl:NamedIndividual ;
+        
+        rdfs:label "Moveis"^^xsd:string .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Parede1-1
+
+:Parede1-1 rdf:type :Obstacle ,
+                    owl:NamedIndividual ;
+           
+           :floor 1 ;
+           
+           :leftOf :Parede1-2 ;
+           
+           :bottomOf :Parede1-5 .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Parede1-2
+
+:Parede1-2 rdf:type :Obstacle ,
+                    owl:NamedIndividual ;
+           
+           :floor 1 ;
+           
+           :bottomOf :Corredor1-1 ;
+           
+           :leftOf :Shopping_Ibirapuera .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Parede1-3
+
+:Parede1-3 rdf:type :Obstacle ,
+                    owl:NamedIndividual ;
+           
+           :floor 1 ;
+           
+           :bottomOf :Corredor1-3 ;
+           
+           :leftOf :Parede1-4 .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Parede1-4
+
+:Parede1-4 rdf:type :Obstacle ,
+                    owl:NamedIndividual ;
+           
+           :floor 1 ;
+           
+           :bottomOf :Loja1-2.1 .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Parede1-5
+
+:Parede1-5 rdf:type :Obstacle ,
+                    owl:NamedIndividual ;
+           
+           :floor 1 ;
+           
+           :leftOf :Corredor1-1 .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Parede2-1
+
+:Parede2-1 rdf:type :Obstacle ,
+                    owl:NamedIndividual ;
+           
+           :floor 2 ;
+           
+           :leftOf :Parede2-2 ;
+           
+           :bottomOf :Parede2-5 .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Parede2-2
+
+:Parede2-2 rdf:type :Obstacle ,
+                    owl:NamedIndividual ;
+           
+           :floor 2 ;
+           
+           :bottomOf :Corredor2-1 ;
+           
+           :leftOf :Parede2-CC .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Parede2-3
+
+:Parede2-3 rdf:type :Obstacle ,
+                    owl:NamedIndividual ;
+           
+           :floor 2 ;
+           
+           :bottomOf :Corredor2-3 ;
+           
+           :leftOf :Parede2-4 .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Parede2-4
+
+:Parede2-4 rdf:type :Obstacle ,
+                    owl:NamedIndividual ;
+           
+           :floor 2 ;
+           
+           :bottomOf :Loja2-2.1 .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Parede2-5
+
+:Parede2-5 rdf:type :Obstacle ,
+                    owl:NamedIndividual ;
+           
+           :floor 2 ;
+           
+           :leftOf :Corredor2-1 .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Parede2-CC
+
+:Parede2-CC rdf:type :CommercialCenter ,
+                     owl:NamedIndividual ;
+            
+            :floor 2 ;
+            
+            :bottomOf :Corredor2-2 ;
+            
+            :leftOf :Parede2-3 .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Patinete_Eletrico
+
+:Patinete_Eletrico rdf:type :Product ,
+                            owl:NamedIndividual ;
+                   
+                   rdfs:label "Patinete Eletrico" ;
+                   
+                   :price "2119.99"^^xsd:double ;
+                   
+                   :hasCategory :Eletronicos .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Roupa
+
+:Roupa rdf:type :Category ,
+                owl:NamedIndividual ;
+       
+       rdfs:label "Roupa"^^xsd:string .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Shopping_Ibirapuera
+
+:Shopping_Ibirapuera rdf:type owl:NamedIndividual .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Xiaomi
+
+:Xiaomi rdf:type :Store ,
+                 owl:NamedIndividual ;
+        
+        :telephone "1156891245"^^xsd:string ;
+        
+        rdfs:comment "Xiaomi"^^xsd:string ;
+        
+        :website "www.xiaomi.ch"^^xsd:string ;
+        
+        :sells :Patinete_Eletrico ,
+               :Xiaomi_Mi9 .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Xiaomi_Mi9
+
+:Xiaomi_Mi9 rdf:type :Product ,
+                     owl:NamedIndividual ;
+            
+            rdfs:label "Xiaomi Mi9"^^xsd:string ;
+            
+            :price "989.99"^^xsd:double ;
+            
+            :hasCategory :Celular .
+
+
+
+
+###  Generated by the OWL API (version 3.4.2) http://owlapi.sourceforge.net
+
