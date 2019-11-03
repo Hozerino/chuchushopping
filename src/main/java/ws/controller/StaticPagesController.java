@@ -17,10 +17,4 @@ public class StaticPagesController {
     public String lojas() {
         return "/lojas.html";
     }
-
-    @GetMapping("/loja/{label}")
-    public String loja(@PathVariable("label") String label) {
-        return "/loja-single.html";
-    }
-
 }

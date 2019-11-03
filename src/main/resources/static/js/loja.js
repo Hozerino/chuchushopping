@@ -1,21 +1,54 @@
-$(jQuery(document).ready(function($) {
-    getStoreInfo();
-}));
+window.onload = function() {
+    var paramsString = this.window.location.href;
+    var searchParams = new URLSearchParams(paramsString);
+
+    label = searchParams.get('loja');
+
+    getStoreInfo(label)
+};
+
+function getStoreInfo(label) {
+    $('#h1-loja').text('Bem vindo à loja ' + label);
+    $('#title').text(label);
 
 
-function getStoreInfo() {
-    $.getJSON('http://localhost:8080/api/loja/', function(data) {
+    // Monta informacoes
+    $.getJSON('http://localhost:8080/api/loja/' + label, function(data) {
+        if(data.results.bindings.length == 0) {
+            alert("Erro na consulta");
+        }
 
-        // settar id=title e id=h1-loja
+        // soh tem uma loja entao pega o 0
+        let storeInfo = data.results.bindings[0];
 
-        // pra cada resultado do sparql
-        $.each(data.results.bindings, function(index, linha) {
+        console.log(storeInfo);
+        var telephone = storeInfo['telefone'].value;
+        var website = storeInfo['website'].value;
 
-            // pega a div de id="divlojas" e appenda o titulo da loja e o link pra url dela no sistema
-            $('#divlojas').append(
-                $('<h1></h1>').text(linha.loja.value),
-                $('<a></a>').attr('href', 'http://localhost:8080/loja/'+linha.loja.value).text('Clique aqui!')
-            );
-        });
+        $('#info').append(
+            $('<p></p>').text('Telefone: ' + telephone),
+            $('<a></a>').attr('href', website).text('Website')
+        )
     });
+
+    // Monta produtos
+    $.getJSON('http://localhost:8080/api/produtos?loja='+label, function(data) {
+        if(data.results.bindings.length == 0) {
+            alert("Essa loja nao vende nenhum produto.");
+        }
+
+        let products = data.results.bindings;
+
+        $.each(products, function(index, prod) {
+            var name = prod.productLabel.value;
+            var price = prod.price.value;
+            var category = prod.category.value;
+
+            $('#products').append(
+                $('<h3></h3>').text(name),
+                $('<p></p>').text('Por apenas ' + price),
+                $('<p></p>').text('Categoria: ' + category)
+            )
+        })
+    })
 }
