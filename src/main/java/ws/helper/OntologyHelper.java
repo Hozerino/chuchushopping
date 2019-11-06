@@ -45,6 +45,11 @@ public class OntologyHelper {
         return ((OntModel) model).listIndividuals(clazz).toList();
     }
 
+    public static List<Individual> getAllIndividualsOfTypeFromModel(String type, Model specificModel) {
+        Resource clazz = specificModel.getResource(schema + type);
+        return ((OntModel) specificModel).listIndividuals(clazz).toList();
+    }
+
     public static Property getProperty(String property) {
         return model.getProperty(schema + property);
     }
@@ -62,17 +67,17 @@ public class OntologyHelper {
     }
 
     // Straight to the trash
-//    public static Model sparqlModel(String query) {
-//        ResultSet res = getResultSetFromQuery(query);
+    public static Model sparqlModel(String query) {
+        ResultSet res = getResultSetFromQuery(query);
+
+        return res.getResourceModel();
+    }
 //
-//        return res.getResourceModel();
-//    }
-//
-//    private static ResultSet getResultSetFromQuery(String query) {
-//        String fullQuery = sparQLPrefixes + query;
-//        Query q = QueryFactory.create(fullQuery);
-//        QueryExecution qe = QueryExecutionFactory.create(q, model);
-//
-//        return qe.execSelect();
-//    }
+    private static ResultSet getResultSetFromQuery(String query) {
+        String fullQuery = sparQLPrefixes + query;
+        Query q = QueryFactory.create(fullQuery);
+        QueryExecution qe = QueryExecutionFactory.create(q, model);
+
+        return qe.execSelect();
+    }
 }
