@@ -10,9 +10,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Product {
-    String label;
-    List<Category> categories;
-    double price;
+    private String label;
+    private List<Category> categories;
+    private double price;
 
     public Product(String label, List<Category> categories, double price) {
         this.label = label;
@@ -34,7 +34,6 @@ public class Product {
         }
 
         List<Category> list;
-
 
         return new Product(label, null, pric);
     }

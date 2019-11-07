@@ -3,7 +3,7 @@ package ws.model;
 import org.apache.jena.ontology.Individual;
 
 public class Category {
-    String label;
+    private String label;
 
     public Category(String label) {
         this.label = label;
