@@ -14,10 +14,13 @@ import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
 import org.springframework.stereotype.Service;
 import ws.helper.OntologyHelper;
+import ws.model.Space;
 
 @Service
 public class NavigationService {
     private static final String TURTLE_LANGUAGE = "TTL";
+
+    List<Space> wholeMap = new ArrayList<>();
 
     @PostConstruct
     private void postConstruct() {
@@ -55,6 +58,10 @@ public class NavigationService {
         }
 
         neighbours.forEach(res -> checkAllConnectionsStartingFromResource(res, sides, alreadyVisited));
+    }
+
+    private List<Space> buildWholeMap(List<Property> props, Individual startingPoint) {
+        return null;
     }
 
     // vai receber a URI de uma loja e vai achar o caminho mais curto ate qualquer chao daquela loja
