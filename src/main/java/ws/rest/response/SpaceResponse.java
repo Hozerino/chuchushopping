@@ -25,28 +25,28 @@ public class SpaceResponse {
         this.name = name;
     }
 
-    public void setTopOf(String topOf) {
+    private void setTopOf(String topOf) {
         this.topOf = topOf;
     }
 
-    public void setLeftOf(String leftOf) {
+    private void setLeftOf(String leftOf) {
         this.leftOf = leftOf;
     }
 
-    public void setRightOf(String rightOf) {
+    private void setRightOf(String rightOf) {
         this.rightOf = rightOf;
     }
 
-    public void setBottomOf(String bottomOf) {
+    private void setBottomOf(String bottomOf) {
         this.bottomOf = bottomOf;
     }
 
-    public void setConnects(String connects) {
+    private void setConnects(String connects) {
         this.connects = connects;
     }
 
 
-    public void setSpaceSide(String side, String sideStructureName) {
+    public void setSpaceProps(String side, String sideStructureName) {
         switch (side) {
             case "topOf":
                 this.setTopOf(sideStructureName);

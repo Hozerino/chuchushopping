@@ -2,6 +2,7 @@ package ws.helper;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -96,5 +97,19 @@ public class OntologyHelper {
         QueryExecution qe = QueryExecutionFactory.create(q, model);
 
         return qe.execSelect();
+    }
+
+    public static List<Property> getProperties(Model model, String schema) {
+        Property topOf = model.getProperty(schema + "topOf");
+        Property bottomOf = model.getProperty(schema + "bottomOf");
+        Property leftOf = model.getProperty(schema + "leftOf");
+        Property rightOf = model.getProperty(schema + "rightOf");
+        Property connects = model.getProperty(schema + "connects");
+
+        return Arrays.asList(topOf, bottomOf, leftOf, rightOf, connects);
+    }
+
+    public static Individual getCommercialCenterIndividual() {
+        return OntologyHelper.getAllIndividualsOfType("CommercialCenter", model).get(0);
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ws.helper.OntologyHelper;
 import ws.rest.response.SpaceResponse;
 import ws.service.NavigationService;
+import ws.service.SpaceService;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,10 +18,10 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class MeuOvoController {
 
-    private final NavigationService navigationService;
+    private final SpaceService spaceService;
 
-    public MeuOvoController(NavigationService navigationService) {
-        this.navigationService = navigationService;
+    public MeuOvoController(SpaceService spaceService) {
+        this.spaceService = spaceService;
     }
 
     @GetMapping("/sparql")
@@ -39,7 +40,7 @@ public class MeuOvoController {
 
     @GetMapping("/estrutura")
     public ResponseEntity<List<SpaceResponse>> getStructure() {
-        return ResponseEntity.of(Optional.of(navigationService.getAllStores()));
+        return ResponseEntity.of(Optional.of(spaceService.getAllStores()));
     }
 
     @GetMapping("/loja/{label}")
