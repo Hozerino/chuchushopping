@@ -75,6 +75,10 @@ public class Space {
             neighbors.add(bottomOf);
         }
 
+        if (connects != null) {
+            neighbors.add(connects);
+        }
+
         return neighbors;
     }
 
