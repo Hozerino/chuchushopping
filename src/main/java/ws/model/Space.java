@@ -1,10 +1,29 @@
 package ws.model;
 
-public abstract class Space {
-    Space topOf;
-    Space bottomOf;
-    Space leftOf;
-    Space rightOf;
+public class Space {
+    private Space topOf;
+    private Space bottomOf;
+    private Space leftOf;
+    private Space rightOf;
+    private String label;
+    private String belongsTo;
+    private Space connects;
+    private boolean isObstacle = false;
+    private boolean isWalkable = false;
+
+    public String getLabel() {
+        return label;
+    }
+
+    public Space(String label, String type) {
+        this.label = label;
+
+        if (type.equals("Obstacle")) {
+            isObstacle = true;
+        } else {
+            isWalkable = true;
+        }
+    }
 
     final Space downNeighbor() {
         return topOf;
@@ -20,6 +39,30 @@ public abstract class Space {
 
     final Space rightNeighbor() {
         return leftOf;
+    }
+
+
+    public void setSpaceProperties(String property, Space neighbor) {
+        switch (property) {
+            case "topOf":
+                this.topOf = (neighbor);
+                break;
+            case "bottomOf":
+                this.bottomOf = (neighbor);
+                break;
+            case "leftOf":
+                this.leftOf = (neighbor);
+                break;
+            case "rightOf":
+                this.rightOf = (neighbor);
+                break;
+            case "connects":
+                this.connects = (neighbor);
+                break;
+            case "belongsTo":
+                this.belongsTo = neighbor.label;
+                break;
+        }
     }
 
 }
