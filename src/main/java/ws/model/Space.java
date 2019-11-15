@@ -1,5 +1,8 @@
 package ws.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Space {
     private Space topOf;
     private Space bottomOf;
@@ -11,8 +14,16 @@ public class Space {
     private boolean isObstacle = false;
     private boolean isWalkable = false;
 
+    public boolean isWalkable() {
+        return isWalkable;
+    }
+
     public String getLabel() {
         return label;
+    }
+
+    public String getBelongsTo() {
+        return belongsTo;
     }
 
     public Space(String label, String type) {
@@ -39,6 +50,32 @@ public class Space {
 
     final Space rightNeighbor() {
         return leftOf;
+    }
+
+    public Space getConnects() {
+        return connects;
+    }
+
+    public List<Space> getNeighbors() {
+        List<Space> neighbors = new ArrayList<>();
+
+        if (topOf != null) {
+            neighbors.add(topOf);
+        }
+
+        if (leftOf != null){
+            neighbors.add(leftOf);
+        }
+
+        if (rightOf != null){
+            neighbors.add(rightOf);
+        }
+
+        if (bottomOf != null){
+            neighbors.add(bottomOf);
+        }
+
+        return neighbors;
     }
 
 

@@ -10,10 +10,7 @@ import ws.model.Space;
 import ws.rest.response.SpaceResponse;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class SpaceService {
@@ -65,7 +62,6 @@ public class SpaceService {
     }
 
 
-
     private void buildGraph(Resource resource, List<Property> props, Set<Resource> alreadyVisited, List<Space> spaces, Space space) {
         spaces.add(space);
 
@@ -95,7 +91,7 @@ public class SpaceService {
         }
     }
 
-   private Space hasAlreadyBeenCreated(String label, List<Space> spaces) {
+    private Space hasAlreadyBeenCreated(String label, List<Space> spaces) {
         for (Space space : spaces) {
             if (label.equals(space.getLabel())) {
                 return space;
@@ -103,5 +99,71 @@ public class SpaceService {
         }
 
         return null;
+    }
+
+
+    public List<Space> shortestPathBFS(Space startSpace, String storeToBeFound) {
+        boolean shortestPathFound;
+        Queue<Space> queue = new LinkedList<>();
+        Set<Space> visitedSpaces = new HashSet<>();
+        List<Space> shortestPath = new ArrayList<>();
+        Map<Space, Space> parentSpaces = new HashMap<>();
+        queue.add(startSpace);
+        shortestPath.add(startSpace);
+
+        while (!queue.isEmpty()) {
+            Space nextNode = queue.peek();
+
+            if (nextNode.getBelongsTo() != null) {
+                shortestPathFound = nextNode.getBelongsTo().equals(storeToBeFound);
+                if (shortestPathFound) {
+                    shortestPath = transverseMapToGetPath(nextNode, parentSpaces);
+                }
+            }
+
+            visitedSpaces.add(nextNode);
+            System.out.println(queue);
+            Space unvisitedSpace = getUnvisitedSpace(nextNode.getNeighbors(), visitedSpaces);
+
+            if (unvisitedSpace != null) {
+                queue.add(unvisitedSpace);
+                visitedSpaces.add(unvisitedSpace);
+                parentSpaces.put(unvisitedSpace, nextNode);
+
+                if (unvisitedSpace.getBelongsTo() != null) {
+                    shortestPathFound = unvisitedSpace.getBelongsTo().equals(storeToBeFound);
+
+                    if (shortestPathFound) {
+                        transverseMapToGetPath(unvisitedSpace, parentSpaces);
+                    }
+                }
+            } else {
+                queue.poll();
+            }
+        }
+
+        return shortestPath;
+    }
+
+    private Space getUnvisitedSpace(List<Space> spaces, Set<Space> visitedSpaces) {
+        for (Space space : spaces) {
+            if (!visitedSpaces.contains(space) && space.isWalkable()) {
+                return space;
+            }
+        }
+        return null;
+    }
+
+    private List<Space> transverseMapToGetPath(Space nodeToBeFound, Map<Space, Space> parentNodes) {
+        List<Space> shortestPath = new ArrayList<>();
+        Space node = nodeToBeFound;
+
+        while (node != null) {
+            shortestPath.add(node);
+            node = parentNodes.get(node);
+        }
+
+        Collections.reverse(shortestPath);
+        return shortestPath;
     }
 }
