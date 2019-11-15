@@ -1,28 +1,20 @@
 package ws.helper;
 
+import org.apache.jena.ontology.Individual;
+import org.apache.jena.ontology.OntModel;
+import org.apache.jena.ontology.OntModelSpec;
+import org.apache.jena.query.*;
+import org.apache.jena.rdf.model.*;
+import org.apache.jena.reasoner.Reasoner;
+import org.apache.jena.reasoner.ReasonerRegistry;
+import ws.WsApplication;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-
-import org.apache.jena.ontology.Individual;
-import org.apache.jena.ontology.OntModel;
-import org.apache.jena.ontology.OntModelSpec;
-import org.apache.jena.query.Query;
-import org.apache.jena.query.QueryExecution;
-import org.apache.jena.query.QueryExecutionFactory;
-import org.apache.jena.query.QueryFactory;
-import org.apache.jena.query.ResultSet;
-import org.apache.jena.query.ResultSetFormatter;
-import org.apache.jena.rdf.model.InfModel;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.Property;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.reasoner.Reasoner;
-import org.apache.jena.reasoner.ReasonerRegistry;
-import ws.WsApplication;
+import java.util.stream.Collectors;
 
 public class OntologyHelper {
 
@@ -31,6 +23,7 @@ public class OntologyHelper {
     private static final String schema = "http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#";
     private static final File owl = new File(Objects.requireNonNull(WsApplication.class.getClassLoader().getResource("ws.ttl")).getFile());
     private static final Model model = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM);
+    private static final Model modelWithoutInf = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM);
     private static final String sparQLPrefixes =
             "PREFIX : <http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#> \n" + "PREFIX owl: <http://www.w3" +
                     ".org/2002/07/owl#> \n" + "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n" + "PREFIX xml: <http://www" +
@@ -71,6 +64,35 @@ public class OntologyHelper {
         return model.getProperty(schema + property);
     }
 
+    public static Property getProperty(String schema, String property) {
+        return model.getProperty(schema + property);
+    }
+
+    public static String getSpaceType(Resource r) {
+        Resource resWithoutInf = modelWithoutInf.getResource(r.getURI());
+        Property typeProperty = modelWithoutInf.getProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#type");
+
+        resWithoutInf.listProperties(typeProperty);
+        List<String> types = r.listProperties(typeProperty).toList().stream()
+                .map(stmt -> stmt.getResource().getLocalName())
+                .collect(Collectors.toList());
+
+        if(types.contains("CommercialCenter")) {
+            return "CommercialCenter";
+        }
+        if(types.contains("Gateway")) {
+            return "Gateway";
+        }
+        if(types.contains("Walkable")) {
+            return "Walkable";
+        }
+        if(types.contains("Obstacle")) {
+            return "Obstacle";
+        }
+
+        return "Unknown";
+    }
+
     public static String defaultSchema() {
         return schema;
     }
@@ -99,14 +121,15 @@ public class OntologyHelper {
         return qe.execSelect();
     }
 
-    public static List<Property> getProperties(Model model, String schema) {
+    public static List<Property> getSpaceProperties(Model model, String schema) {
         Property topOf = model.getProperty(schema + "topOf");
         Property bottomOf = model.getProperty(schema + "bottomOf");
         Property leftOf = model.getProperty(schema + "leftOf");
         Property rightOf = model.getProperty(schema + "rightOf");
         Property connects = model.getProperty(schema + "connects");
+        Property belongsTo = model.getProperty(schema + "belongsTo");
 
-        return Arrays.asList(topOf, bottomOf, leftOf, rightOf, connects);
+        return Arrays.asList(topOf, bottomOf, leftOf, rightOf, connects, belongsTo);
     }
 
     public static Individual getCommercialCenterIndividual() {

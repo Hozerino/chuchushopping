@@ -21,47 +21,36 @@ public class SpaceResponse {
     @JsonProperty
     private String connects;
 
-    public SpaceResponse(String name) {
+    @JsonProperty
+    private String type;
+
+    @JsonProperty("store")
+    private String storeLabel;
+
+    public SpaceResponse(String name, String type) {
         this.name = name;
+        this.type = type;
     }
 
-    private void setTopOf(String topOf) {
-        this.topOf = topOf;
-    }
-
-    private void setLeftOf(String leftOf) {
-        this.leftOf = leftOf;
-    }
-
-    private void setRightOf(String rightOf) {
-        this.rightOf = rightOf;
-    }
-
-    private void setBottomOf(String bottomOf) {
-        this.bottomOf = bottomOf;
-    }
-
-    private void setConnects(String connects) {
-        this.connects = connects;
-    }
-
-
-    public void setSpaceProps(String side, String sideStructureName) {
-        switch (side) {
+    public void setSpaceProperties(String property, String sideStructureName) {
+        switch (property) {
             case "topOf":
-                this.setTopOf(sideStructureName);
+                this.topOf = (sideStructureName);
                 break;
             case "bottomOf":
-                this.setBottomOf(sideStructureName);
+                this.bottomOf = (sideStructureName);
                 break;
             case "leftOf":
-                this.setLeftOf(sideStructureName);
+                this.leftOf = (sideStructureName);
                 break;
             case "rightOf":
-                this.setRightOf(sideStructureName);
+                this.rightOf = (sideStructureName);
                 break;
             case "connects":
-                this.setConnects(sideStructureName);
+                this.connects = (sideStructureName);
+                break;
+            case "belongsTo":
+                this.storeLabel = sideStructureName;
                 break;
         }
     }

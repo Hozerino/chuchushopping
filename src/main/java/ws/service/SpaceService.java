@@ -18,21 +18,28 @@ public class SpaceService {
 
     private static Model model = OntologyHelper.model();
     private static String schema = OntologyHelper.defaultSchema();
-    private static List<Property> props = OntologyHelper.getProperties(model, schema);
+    private static List<Property> props = OntologyHelper.getSpaceProperties(model, schema);
     private static Individual commecialCenter = OntologyHelper.getCommercialCenterIndividual();
+    private static List<SpaceResponse> shoppingMap = null;
 
     public List<SpaceResponse> getAllStores() {
         List<SpaceResponse> res = new ArrayList<>();
 
-        buildOnthology(commecialCenter, props, new HashSet<>(), res);
+        // contorno tecnico de baixo custo pra cachear, evita ficar rodando 1001 vezes
+        if(shoppingMap == null) {
+            buildOntology(commecialCenter, props, new HashSet<>(), res);
+            shoppingMap = res;
+        }
 
-        return res;
+        return shoppingMap;
+
     }
 
-    private void buildOnthology(Resource resource, List<Property> props, Set<Resource> alreadyVisited, List<SpaceResponse> spaces) {
+    private void buildOntology(Resource resource, List<Property> props, Set<Resource> alreadyVisited, List<SpaceResponse> spaces) {
         List<Resource> neighbours = new ArrayList<>();
 
-        SpaceResponse spr = new SpaceResponse(resource.getLocalName());
+        String type = OntologyHelper.getSpaceType(resource);
+        SpaceResponse spr = new SpaceResponse(resource.getLocalName(), type);
 
         if (!alreadyVisited.contains(resource)) {
             alreadyVisited.add(resource);
@@ -40,7 +47,7 @@ public class SpaceService {
                 if (resource.hasProperty(prop)) {
                     Resource connection = resource.getProperty(prop).getResource();
 
-                    spr.setSpaceProps(prop.getLocalName(), connection.getLocalName());
+                    spr.setSpaceProperties(prop.getLocalName(), connection.getLocalName());
 
                     neighbours.add(connection);
                 }
@@ -49,11 +56,6 @@ public class SpaceService {
             spaces.add(spr);
         }
 
-        neighbours.forEach(res -> buildOnthology(res, props, alreadyVisited, spaces));
-    }
-
-    //TODO fazer isso aqui funfa
-    private String getResourceType(Resource resource) {
-        return ((Individual) resource.asResource()).getOntClass(true).getLocalName();
+        neighbours.forEach(res -> buildOntology(res.asResource(), props, alreadyVisited, spaces));
     }
 }
