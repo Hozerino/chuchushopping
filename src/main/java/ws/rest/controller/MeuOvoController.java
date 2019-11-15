@@ -1,14 +1,10 @@
 package ws.rest.controller;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ws.helper.OntologyHelper;
 import ws.rest.response.SpaceResponse;
-import ws.service.NavigationService;
 import ws.service.SpaceService;
 
 import java.util.List;
@@ -31,11 +27,9 @@ public class MeuOvoController {
 
     @GetMapping("/lojas")
     public String getStores() {
-                // ia fazer pegar os individuals do tipo loja mas fica zuado, vou deixar o front cuidar dessa parte
-//        return OntologyHelper.getAllIndividualsOfType("Store").stream()
-//                .map(Store::build).collect(Collectors.toList());
-
-        return OntologyHelper.sparql("SELECT ?loja WHERE {[a :Store; rdfs:label ?loja]}");
+        String response = OntologyHelper.sparql("SELECT ?loja WHERE {[a :Store; rdfs:label ?loja]}");
+        System.out.println(response);
+        return response;
     }
 
     @GetMapping("/estrutura")
@@ -61,17 +55,26 @@ public class MeuOvoController {
     // fica meio pt/en pq o front fica mais bonito se usar os endpoint BR,
     // mas no cod vai nas gringa senao o cabeca chora
     @GetMapping("/produtos")
-    public String productsSoldBy(@RequestParam(required = true, value = "loja") String storeLabel) {
-        return OntologyHelper.sparql(String.format(
-                "SELECT ?productLabel ?price ?category\n" +
-                        "WHERE {\n" +
-                        "    [a :Store ;\n" +
-                        "        rdfs:label \"%s\" ;\n" +
-                        "        :sells [a :Product;\n" +
-                        "        rdfs:label ?productLabel ;\n" +
-                        "        :price ?price ;\n" +
-                        "        :hasCategory [a :Category ; rdfs:label ?category]]]\n" +
-                        "}", storeLabel
-        ));
+    public String productsSoldBy(@RequestParam(required = false, value = "loja") String storeLabel) {
+        if(StringUtils.isNotBlank(storeLabel)) {
+            return OntologyHelper.sparql(String.format(
+                    "SELECT ?productLabel ?price ?category\n" +
+                            "WHERE {\n" +
+                            "    [a :Store ;\n" +
+                            "        rdfs:label \"%s\" ;\n" +
+                            "        :sells [a :Product;\n" +
+                            "        rdfs:label ?productLabel ;\n" +
+                            "        :price ?price ;\n" +
+                            "        :hasCategory [a :Category ; rdfs:label ?category]]]\n" +
+                            "}", storeLabel
+            ));
+        }
+        return OntologyHelper.sparql("SELECT ?productLabel ?price ?category\n" +
+                "WHERE {\n" +
+                "\t[a :Product ;\n" +
+                "\t\trdfs:label ?productLabel ;\n" +
+                "\t\t:price ?price;\n" +
+                "\t\t:hasCategory [a :Category ; rdfs:label ?category]]\n" +
+                "}");
     }
 }
