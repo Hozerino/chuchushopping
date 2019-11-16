@@ -74,12 +74,12 @@ function getStoreInfo(label) {
             var price = prod.price.value;
             var category = prod.category.value;
             var product = {
-                nome: name,
-                preco: price,
-                categoria: category
+                name: name,
+                price: price,
+                category: category
             }
 
-            loja.produtos.push(procut);
+            loja.produtos.push(product);
 //            $('#products').append(
 //                $('<h3></h3>').text(name),
 //                $('<p></p>').text('Por apenas ' + price),

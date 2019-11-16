@@ -4,13 +4,21 @@ window.onload = function() {
 
 
 function buildHtmlInfo() {
-    buildStoreList();
-    buildProductsList();
+    const urlParams = new URLSearchParams(window.location.search);
+    const storeLabel = urlParams.get('loja');
+
+    buildTitle(storeLabel);
+    buildProductsList(storeLabel);
 }
 
+function buildTitle(storeLabel) {
+    $('#store-label').text('Loja: ' + storeLabel);
 
-function buildProductsList() {
-    let products = getProducts();
+}
+function buildProductsList(storeLabel) {
+
+    var storeInfo = getStoreInfo(storeLabel);
+    let products = storeInfo.produtos;
 
     var arrayLength = products.length;
     for (var i = 0; i < arrayLength; i++) {
@@ -31,25 +39,6 @@ function buildProductsList() {
         '</div>\n']
 
 
-        $('#general-products').append(html.join(''));
-    }
-}
-
-
-function buildStoreList() {
-// TODO redirecionar pra pag da loja
-    let lojas = getLojas();
-    console.log(lojas);
-
-    // pega a div de id="divlojas" e appenda o titulo da loja e o link pra url dela no sistema
-    var arrayLength = lojas.length;
-    for (var i = 0; i < arrayLength; i++) {
-//        var stringParams = window.location.href;
-//        var queryParam = new URLSearchParams(stringParams.search());
-        var redirectToNewLoja = "loja-single.html?loja=" + lojas[i];
-
-        $('#lista-lojas').append(
-            $('<a></a>').addClass("list-group-item").attr('href', redirectToNewLoja).text(lojas[i])
-        );
+        $('#store-products').append(html.join(''));
     }
 }
