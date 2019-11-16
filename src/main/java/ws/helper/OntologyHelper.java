@@ -128,8 +128,9 @@ public class OntologyHelper {
         Property rightOf = model.getProperty(schema + "rightOf");
         Property connects = model.getProperty(schema + "connects");
         Property belongsTo = model.getProperty(schema + "belongsTo");
+        Property floor = model.getProperty(schema + "floor");
 
-        return Arrays.asList(topOf, bottomOf, leftOf, rightOf, connects, belongsTo);
+        return Arrays.asList(topOf, bottomOf, leftOf, rightOf, connects, belongsTo, floor);
     }
 
     public static Individual getCommercialCenterIndividual() {

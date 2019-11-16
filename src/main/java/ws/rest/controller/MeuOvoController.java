@@ -4,6 +4,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ws.helper.OntologyHelper;
+import ws.model.Space;
+import ws.rest.request.PathRequest;
 import ws.rest.response.SpaceResponse;
 import ws.service.SpaceService;
 
@@ -30,6 +32,10 @@ public class MeuOvoController {
         String response = OntologyHelper.sparql("SELECT ?loja WHERE {[a :Store; rdfs:label ?loja]}");
         System.out.println(response);
         return response;
+    }
+
+    public ResponseEntity<List<Space>> getShortestPath(@RequestBody PathRequest pathRequest) {
+        return ResponseEntity.of(Optional.of(spaceService.getShortestPath(null, pathRequest)));
     }
 
     @GetMapping("/estrutura")

@@ -14,6 +14,16 @@ public class Space {
     private boolean isObstacle = false;
     private boolean isWalkable = false;
 
+    public String getFloor() {
+        return floor;
+    }
+
+    public void setFloor(String floor) {
+        this.floor = floor;
+    }
+
+    private String floor;
+
     public boolean isWalkable() {
         return isWalkable;
     }

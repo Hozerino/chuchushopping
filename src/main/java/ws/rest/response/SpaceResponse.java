@@ -24,6 +24,9 @@ public class SpaceResponse {
     @JsonProperty
     private String type;
 
+    @JsonProperty
+    private String floor;
+
     @JsonProperty("store")
     private String storeLabel;
 
@@ -51,6 +54,9 @@ public class SpaceResponse {
                 break;
             case "belongsTo":
                 this.storeLabel = sideStructureName;
+                break;
+            case "floor":
+                this.floor = sideStructureName;
                 break;
         }
     }

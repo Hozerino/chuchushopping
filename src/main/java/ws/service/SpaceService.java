@@ -7,6 +7,7 @@ import org.apache.jena.rdf.model.Resource;
 import org.springframework.stereotype.Service;
 import ws.helper.OntologyHelper;
 import ws.model.Space;
+import ws.rest.request.PathRequest;
 import ws.rest.response.SpaceResponse;
 
 import javax.annotation.PostConstruct;
@@ -27,10 +28,12 @@ public class SpaceService {
     private void init() {
         List<SpaceResponse> spaceResponseList = new ArrayList<>();
         List<Space> spaceList = new ArrayList<>();
+
         buildOntology(commercialCenterIndividual, props, new HashSet<>(), spaceResponseList);
+        shoppingMap = spaceResponseList;
+
         buildGraph(commercialCenterIndividual, props, new HashSet<>(), spaceList, commercialCenterSpace);
         shoppingGraph = spaceList;
-        shoppingMap = spaceResponseList;
     }
 
     public List<SpaceResponse> getAllStores() {
@@ -47,11 +50,17 @@ public class SpaceService {
             alreadyVisited.add(resource);
             props.forEach(prop -> {
                 if (resource.hasProperty(prop)) {
-                    Resource connection = resource.getProperty(prop).getResource();
+                    String propName = "";
+                    if (prop.getLocalName().equals("floor")) {
+                        propName = resource.getProperty(prop).getString();
+                    } else {
+                        Resource connection = resource.getProperty(prop).getResource();
+                        propName = resource.getProperty(prop).getResource().getLocalName();
+                        neighbours.add(connection);
+                    }
 
-                    spr.setSpaceProperties(prop.getLocalName(), connection.getLocalName());
+                    spr.setSpaceProperties(prop.getLocalName(), propName);
 
-                    neighbours.add(connection);
                 }
             });
 
@@ -70,22 +79,29 @@ public class SpaceService {
 
             props.forEach(prop -> {
                 if (resource.hasProperty(prop)) {
-                    Resource connection = resource.getProperty(prop).getResource();
-
-                    String type = OntologyHelper.getSpaceType(connection);
-                    if (type.equalsIgnoreCase("Obstacle")) {
-                        type = "Obstacle";
+                    if (prop.getLocalName().equals("floor")) {
+                        space.setFloor(resource.getProperty(prop).getString());
                     } else {
-                        type = "Walkable";
+                        Resource connection = resource.getProperty(prop).getResource();
+
+                        String type = OntologyHelper.getSpaceType(connection);
+
+                        if (type.equalsIgnoreCase("Obstacle")) {
+                            type = "Obstacle";
+                        } else {
+                            type = "Walkable";
+                        }
+
+                        Space neighbor = hasAlreadyBeenCreated(connection.getLocalName(), spaces);
+
+                        if (neighbor == null) {
+                            neighbor = new Space(connection.getLocalName(), type);
+                            buildGraph(connection, props, alreadyVisited, spaces, neighbor);
+                        }
+
+                        space.setSpaceProperties(prop.getLocalName(), neighbor);
                     }
 
-                    Space neighbor = hasAlreadyBeenCreated(connection.getLocalName(), spaces);
-                    if (neighbor == null) {
-                        neighbor = new Space(connection.getLocalName(), type);
-                        buildGraph(connection, props, alreadyVisited, spaces, neighbor);
-                    }
-
-                    space.setSpaceProperties(prop.getLocalName(), neighbor);
                 }
             });
         }
@@ -102,7 +118,11 @@ public class SpaceService {
     }
 
 
-    public List<Space> shortestPathBFS(Space startSpace, String storeToBeFound) {
+    public List<Space> getShortestPath(Space startSpace, PathRequest pathRequest) {
+        if (startSpace == null) {
+            startSpace = commercialCenterSpace;
+        }
+
         boolean shortestPathFound;
         Queue<Space> queue = new LinkedList<>();
         Set<Space> visitedSpaces = new HashSet<>();
@@ -112,26 +132,26 @@ public class SpaceService {
         shortestPath.add(startSpace);
 
         while (!queue.isEmpty()) {
-            Space nextNode = queue.peek();
+            Space nextSpace = queue.peek();
 
-            if (nextNode.getBelongsTo() != null) {
-                shortestPathFound = nextNode.getBelongsTo().equals(storeToBeFound);
+            if (nextSpace.getBelongsTo() != null) {
+                shortestPathFound = isDesiredSpace(pathRequest, nextSpace);
                 if (shortestPathFound) {
-                    shortestPath = transverseMapToGetPath(nextNode, parentSpaces);
+                    shortestPath = transverseMapToGetPath(nextSpace, parentSpaces);
                 }
             }
 
-            visitedSpaces.add(nextNode);
+            visitedSpaces.add(nextSpace);
             System.out.println(queue);
-            Space unvisitedSpace = getUnvisitedSpace(nextNode.getNeighbors(), visitedSpaces);
+            Space unvisitedSpace = getUnvisitedSpace(nextSpace.getNeighbors(), visitedSpaces);
 
             if (unvisitedSpace != null) {
                 queue.add(unvisitedSpace);
                 visitedSpaces.add(unvisitedSpace);
-                parentSpaces.put(unvisitedSpace, nextNode);
+                parentSpaces.put(unvisitedSpace, nextSpace);
 
                 if (unvisitedSpace.getBelongsTo() != null) {
-                    shortestPathFound = unvisitedSpace.getBelongsTo().equals(storeToBeFound);
+                    shortestPathFound = isDesiredSpace(pathRequest, unvisitedSpace);
 
                     if (shortestPathFound) {
                         transverseMapToGetPath(unvisitedSpace, parentSpaces);
@@ -143,6 +163,10 @@ public class SpaceService {
         }
 
         return shortestPath;
+    }
+
+    private boolean isDesiredSpace(PathRequest pathRequest, Space space) {
+        return space.getBelongsTo().equals(pathRequest.getStoreToBeFound()) && space.getFloor().equals(pathRequest.getFloor());
     }
 
     private Space getUnvisitedSpace(List<Space> spaces, Set<Space> visitedSpaces) {
