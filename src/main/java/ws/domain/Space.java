@@ -1,9 +1,10 @@
-package ws.model;
+package ws.domain;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Space {
+
     private Space topOf;
     private Space bottomOf;
     private Space leftOf;
@@ -11,8 +12,17 @@ public class Space {
     private String label;
     private String belongsTo;
     private Space connects;
-    private boolean isObstacle = false;
     private boolean isWalkable = false;
+    private String floor;
+
+
+    public Space(String label, String type) {
+        this.label = label;
+
+        if (!type.equals("Obstacle")) {
+            isWalkable = true;
+        }
+    }
 
     public String getFloor() {
         return floor;
@@ -22,7 +32,6 @@ public class Space {
         this.floor = floor;
     }
 
-    private String floor;
 
     public boolean isWalkable() {
         return isWalkable;
@@ -34,16 +43,6 @@ public class Space {
 
     public String getBelongsTo() {
         return belongsTo;
-    }
-
-    public Space(String label, String type) {
-        this.label = label;
-
-        if (type.equals("Obstacle")) {
-            isObstacle = true;
-        } else {
-            isWalkable = true;
-        }
     }
 
     final Space downNeighbor() {

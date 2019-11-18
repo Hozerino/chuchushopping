@@ -1,13 +1,13 @@
-package ws.service;
+package ws.domain;
 
 import org.apache.jena.ontology.Individual;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
 import org.springframework.stereotype.Service;
-import ws.helper.OntologyHelper;
-import ws.model.Space;
+import ws.infrastructure.OntologyUtil;
 import ws.rest.request.PathRequest;
+import ws.rest.response.PathResponse;
 import ws.rest.response.SpaceResponse;
 
 import javax.annotation.PostConstruct;
@@ -16,13 +16,12 @@ import java.util.*;
 @Service
 public class SpaceService {
 
-    private static Model model = OntologyHelper.model();
-    private static String schema = OntologyHelper.defaultSchema();
-    private static List<Property> props = OntologyHelper.getSpaceProperties(model, schema);
-    private static Individual commercialCenterIndividual = OntologyHelper.getCommercialCenterIndividual();
+    private static Model model = OntologyUtil.model();
+    private static String schema = OntologyUtil.defaultSchema();
+    private static List<Property> props = OntologyUtil.getSpaceProperties(model, schema);
+    private static Individual commercialCenterIndividual = OntologyUtil.getCommercialCenterIndividual();
     private static List<SpaceResponse> shoppingMap = null;
-    private static List<Space> shoppingGraph = null;
-    private Space commercialCenterSpace = new Space(commercialCenterIndividual.getLocalName(), OntologyHelper.getSpaceType(commercialCenterIndividual));
+    private Space commercialCenterSpace = new Space(commercialCenterIndividual.getLocalName(), OntologyUtil.getSpaceType(commercialCenterIndividual));
 
     @PostConstruct
     private void init() {
@@ -33,7 +32,6 @@ public class SpaceService {
         shoppingMap = spaceResponseList;
 
         buildGraph(commercialCenterIndividual, props, new HashSet<>(), spaceList, commercialCenterSpace);
-        shoppingGraph = spaceList;
     }
 
     public List<SpaceResponse> getAllStores() {
@@ -43,14 +41,14 @@ public class SpaceService {
     private void buildOntology(Resource resource, List<Property> props, Set<Resource> alreadyVisited, List<SpaceResponse> spaces) {
         List<Resource> neighbours = new ArrayList<>();
 
-        String type = OntologyHelper.getSpaceType(resource);
+        String type = OntologyUtil.getSpaceType(resource);
         SpaceResponse spr = new SpaceResponse(resource.getLocalName(), type);
 
         if (!alreadyVisited.contains(resource)) {
             alreadyVisited.add(resource);
             props.forEach(prop -> {
                 if (resource.hasProperty(prop)) {
-                    String propName = "";
+                    String propName;
                     if (prop.getLocalName().equals("floor")) {
                         propName = resource.getProperty(prop).getString();
                     } else {
@@ -84,18 +82,10 @@ public class SpaceService {
                     } else {
                         Resource connection = resource.getProperty(prop).getResource();
 
-                        String type = OntologyHelper.getSpaceType(connection);
-
-                        if (type.equalsIgnoreCase("Obstacle")) {
-                            type = "Obstacle";
-                        } else {
-                            type = "Walkable";
-                        }
-
                         Space neighbor = hasAlreadyBeenCreated(connection.getLocalName(), spaces);
 
                         if (neighbor == null) {
-                            neighbor = new Space(connection.getLocalName(), type);
+                            neighbor = new Space(connection.getLocalName(), OntologyUtil.getSpaceType(connection));
                             buildGraph(connection, props, alreadyVisited, spaces, neighbor);
                         }
 
@@ -117,8 +107,7 @@ public class SpaceService {
         return null;
     }
 
-
-    public List<Space> getShortestPath(Space startSpace, PathRequest pathRequest) {
+    public List<PathResponse> getShortestPath(Space startSpace, PathRequest pathRequest) {
         if (startSpace == null) {
             startSpace = commercialCenterSpace;
         }
@@ -128,6 +117,7 @@ public class SpaceService {
         Set<Space> visitedSpaces = new HashSet<>();
         List<Space> shortestPath = new ArrayList<>();
         Map<Space, Space> parentSpaces = new HashMap<>();
+
         queue.add(startSpace);
         shortestPath.add(startSpace);
 
@@ -136,13 +126,13 @@ public class SpaceService {
 
             if (nextSpace.getBelongsTo() != null) {
                 shortestPathFound = isDesiredSpace(pathRequest, nextSpace);
+
                 if (shortestPathFound) {
                     shortestPath = transverseMapToGetPath(nextSpace, parentSpaces);
                 }
             }
 
             visitedSpaces.add(nextSpace);
-            System.out.println(queue);
             Space unvisitedSpace = getUnvisitedSpace(nextSpace.getNeighbors(), visitedSpaces);
 
             if (unvisitedSpace != null) {
@@ -162,7 +152,7 @@ public class SpaceService {
             }
         }
 
-        return shortestPath;
+        return PathResponse.convertSpaceListToPathList(shortestPath);
     }
 
     private boolean isDesiredSpace(PathRequest pathRequest, Space space) {
@@ -178,13 +168,13 @@ public class SpaceService {
         return null;
     }
 
-    private List<Space> transverseMapToGetPath(Space nodeToBeFound, Map<Space, Space> parentNodes) {
+    private List<Space> transverseMapToGetPath(Space spaceToBeFound, Map<Space, Space> parentSpaces) {
         List<Space> shortestPath = new ArrayList<>();
-        Space node = nodeToBeFound;
+        Space node = spaceToBeFound;
 
         while (node != null) {
             shortestPath.add(node);
-            node = parentNodes.get(node);
+            node = parentSpaces.get(node);
         }
 
         Collections.reverse(shortestPath);

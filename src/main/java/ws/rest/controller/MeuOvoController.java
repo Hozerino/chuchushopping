@@ -3,11 +3,11 @@ package ws.rest.controller;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ws.helper.OntologyHelper;
-import ws.model.Space;
+import ws.infrastructure.OntologyUtil;
 import ws.rest.request.PathRequest;
+import ws.rest.response.PathResponse;
 import ws.rest.response.SpaceResponse;
-import ws.service.SpaceService;
+import ws.domain.SpaceService;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,17 +24,18 @@ public class MeuOvoController {
 
     @GetMapping("/sparql")
     public String sparqlQuery(@RequestParam String query) {
-        return OntologyHelper.sparql(query);
+        return OntologyUtil.sparql(query);
     }
 
     @GetMapping("/lojas")
     public String getStores() {
-        String response = OntologyHelper.sparql("SELECT ?loja WHERE {[a :Store; rdfs:label ?loja]}");
+        String response = OntologyUtil.sparql("SELECT ?loja WHERE {[a :Store; rdfs:label ?loja]}");
         System.out.println(response);
         return response;
     }
 
-    public ResponseEntity<List<Space>> getShortestPath(@RequestBody PathRequest pathRequest) {
+    @PostMapping("/shortest-paths")
+    public ResponseEntity<List<PathResponse>> getShortestPath(@RequestBody PathRequest pathRequest) {
         return ResponseEntity.of(Optional.of(spaceService.getShortestPath(null, pathRequest)));
     }
 
@@ -49,7 +50,7 @@ public class MeuOvoController {
         // https://morelab.deusto.es/code_injection/files/sparql_injection.pdf
         // mas a gente ta liberando endpoint de sparql entao dane-se
 
-        return OntologyHelper.sparql(String.format("SELECT ?nome ?telefone ?website ?produtos\n" +
+        return OntologyUtil.sparql(String.format("SELECT ?nome ?telefone ?website ?produtos\n" +
                 "WHERE {\n" +
                 "    [a :Store;\n" +
                 "        rdfs:label \"%s\";\n" +
@@ -63,7 +64,7 @@ public class MeuOvoController {
     @GetMapping("/produtos")
     public String productsSoldBy(@RequestParam(required = false, value = "loja") String storeLabel) {
         if(StringUtils.isNotBlank(storeLabel)) {
-            return OntologyHelper.sparql(String.format(
+            return OntologyUtil.sparql(String.format(
                     "SELECT ?productLabel ?price ?category\n" +
                             "WHERE {\n" +
                             "    [a :Store ;\n" +
@@ -75,7 +76,7 @@ public class MeuOvoController {
                             "}", storeLabel
             ));
         }
-        return OntologyHelper.sparql("SELECT ?productLabel ?price ?category\n" +
+        return OntologyUtil.sparql("SELECT ?productLabel ?price ?category\n" +
                 "WHERE {\n" +
                 "\t[a :Product ;\n" +
                 "\t\trdfs:label ?productLabel ;\n" +
