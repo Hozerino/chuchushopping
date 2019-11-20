@@ -5,7 +5,7 @@ $.ajaxSetup({
 
 function getLojas() {
 
-    var lojas = new Array();
+    let lojas = [];
 
     $.getJSON('http://localhost:8080/api/lojas', function(data) {
 
@@ -32,6 +32,53 @@ function getLojas() {
         });
     });
     return lojas;
+}
+
+function getSpaces() {
+    let spaces = [];
+
+    $.getJSON('http://localhost:8080/api/estrutura', function(data) {
+        $.each(data, function (index, spaceResponse) {
+            let space = {
+                name: spaceResponse.name,
+                topOf: spaceResponse.top_of,
+                bottomOf: spaceResponse.bottom_of,
+                leftOf: spaceResponse.left_of,
+                rightOf: spaceResponse.right_of,
+                connects: spaceResponse.connects,
+                type: spaceResponse.type,
+                floor: spaceResponse.floor,
+                storeLabel: spaceResponse.store
+            };
+            spaces.push(space)
+        });
+    });
+
+    return spaces;
+}
+
+function buildProperSpaces() {
+    let stringBasedSpaces = getSpaces();
+    let spaces = [];
+
+    console.log(stringBasedSpaces);
+
+    stringBasedSpaces.forEach(function (space, index) {
+        let newSpace = {
+            name: space.name,
+            topOf: stringBasedSpaces.find(element => element.name === space.topOf),
+            bottomOf: stringBasedSpaces.find(element => element.name === space.bottomOf),
+            leftOf: stringBasedSpaces.find(element => element.name === space.leftOf),
+            rightOf: stringBasedSpaces.find(element => element.name === space.rightOf),
+            connects: stringBasedSpaces.find(element => element.name === space.connects),
+            type: space.type,
+            floor: space.floor,
+            storeLabel: space.storeLabel
+        };
+        spaces.push(newSpace);
+    });
+    console.log(spaces);
+    return spaces;
 }
 
 function getStoreInfo(label) {
@@ -93,13 +140,13 @@ function getStoreInfo(label) {
 
 function getProducts() {
 
-    var products = new Array();
+    let products = [];
 
     $.getJSON('http://localhost:8080/api/produtos', function(data) {
 
         // pra cada resultado do sparql
         $.each(data.results.bindings, function(index, linha) {
-            if(data.results.bindings.length == 0) {
+            if(data.results.bindings.length === 0) {
                 alert("Nenhum produto encontrado.");
             }
 
