@@ -1,34 +1,35 @@
 $.ajaxSetup({
     async: false
 });
+$.support.cors = true;
 
 
 function getLojas() {
 
     let lojas = [];
 
-    $.getJSON('http://localhost:8080/api/lojas', function(data) {
+    $.getJSON('http://localhost:8080/api/lojas', function (data) {
 
         // pra cada resultado do sparql
-        $.each(data.results.bindings, function(index, linha) {
-            if(data.results.bindings.length == 0) {
+        $.each(data.results.bindings, function (index, linha) {
+            if (data.results.bindings.length == 0) {
                 alert("Nenhuma loja encontrada.");
             }
 
-//            var stringParams = window.location.href;
-//            var queryParam = new URLSearchParams(stringParams.search());
-//
-//            queryParam.append("loja", linha.loja.value);
-//
-//            let redirectToNewLoja = "loja-single.html?" + queryParam.toString();
+            //            var stringParams = window.location.href;
+            //            var queryParam = new URLSearchParams(stringParams.search());
+            //
+            //            queryParam.append("loja", linha.loja.value);
+            //
+            //            let redirectToNewLoja = "loja-single.html?" + queryParam.toString();
 
             lojas.push(linha.loja.value);
 
             // pega a div de id="divlojas" e appenda o titulo da loja e o link pra url dela no sistema
-//            $('#divlojas').append(
-//                $('<h1></h1>').text(linha.loja.value),
-//                $('<a></a>').attr('href', redirectToNewLoja).text('Clique aqui!')
-//            );
+            //            $('#divlojas').append(
+            //                $('<h1></h1>').text(linha.loja.value),
+            //                $('<a></a>').attr('href', redirectToNewLoja).text('Clique aqui!')
+            //            );
         });
     });
     return lojas;
@@ -37,7 +38,7 @@ function getLojas() {
 function getSpaces() {
     let spaces = [];
 
-    $.getJSON('http://localhost:8080/api/estrutura', function(data) {
+    $.getJSON('http://localhost:8080/api/estrutura', function (data) {
         $.each(data, function (index, spaceResponse) {
             let space = {
                 name: spaceResponse.name,
@@ -90,8 +91,8 @@ function getStoreInfo(label) {
     }
 
     // Monta informacoes
-    $.getJSON('http://localhost:8080/api/loja/' + label, function(data) {
-        if(data.results.bindings.length == 0) {
+    $.getJSON('http://localhost:8080/api/loja/' + label, function (data) {
+        if (data.results.bindings.length == 0) {
             alert("Erro na consulta");
         }
 
@@ -102,21 +103,21 @@ function getStoreInfo(label) {
         loja.telefone = storeInfo['telefone'].value;
         loja.website = storeInfo['website'].value;
 
-//        $('#info').append(
-//            $('<p></p>').text('Telefone: ' + telephone),
-//            $('<a></a>').attr('href', website).text('Website')
-//        )
+        //        $('#info').append(
+        //            $('<p></p>').text('Telefone: ' + telephone),
+        //            $('<a></a>').attr('href', website).text('Website')
+        //        )
     });
 
     // Monta produtos
-    $.getJSON('http://localhost:8080/api/produtos?loja='+label, function(data) {
-        if(data.results.bindings.length == 0) {
+    $.getJSON('http://localhost:8080/api/produtos?loja=' + label, function (data) {
+        if (data.results.bindings.length == 0) {
             alert("Essa loja nao vende nenhum produto.");
         }
 
         let products = data.results.bindings;
 
-        $.each(products, function(index, prod) {
+        $.each(products, function (index, prod) {
             var name = prod.productLabel.value;
             var price = prod.price.value;
             var category = prod.category.value;
@@ -127,11 +128,11 @@ function getStoreInfo(label) {
             }
 
             loja.produtos.push(product);
-//            $('#products').append(
-//                $('<h3></h3>').text(name),
-//                $('<p></p>').text('Por apenas ' + price),
-//                $('<p></p>').text('Categoria: ' + category)
-//            )
+            //            $('#products').append(
+            //                $('<h3></h3>').text(name),
+            //                $('<p></p>').text('Por apenas ' + price),
+            //                $('<p></p>').text('Categoria: ' + category)
+            //            )
         });
     })
 
@@ -142,18 +143,18 @@ function getProducts() {
 
     let products = [];
 
-    $.getJSON('http://localhost:8080/api/produtos', function(data) {
+    $.getJSON('http://localhost:8080/api/produtos', function (data) {
 
         // pra cada resultado do sparql
-        $.each(data.results.bindings, function(index, linha) {
-            if(data.results.bindings.length === 0) {
+        $.each(data.results.bindings, function (index, linha) {
+            if (data.results.bindings.length === 0) {
                 alert("Nenhum produto encontrado.");
             }
 
             var product = {
                 name: linha.productLabel.value,
                 price: linha.price.value,
-                category : linha.category.price
+                category: linha.category.price
             }
 
             products.push(product);
