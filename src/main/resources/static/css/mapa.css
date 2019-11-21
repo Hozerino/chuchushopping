@@ -1,0 +1,19 @@
+.floor {
+    position  : relative;
+    margin    : 0 auto;
+    width     : 600px;
+    height    : 600px;
+    background: lightgray;
+    box-sizing: border-box;
+}
+
+.square {
+    height    : 100px;
+    width     : 100px;
+    background: gray;
+    margin    : 2px;
+    position  : absolute;
+    top       : 10px;
+    left      : 10px;
+    box-sizing: border-box;
+}
