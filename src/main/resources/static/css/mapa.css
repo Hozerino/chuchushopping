@@ -1,9 +1,10 @@
 .floor {
     position  : relative;
     margin    : 0 auto;
-    width     : 600px;
-    height    : 600px;
-    background: lightgray;
+    width     : auto;
+    height    : auto;
+    display: block;
+    background: gray;
     box-sizing: border-box;
 }
 

@@ -14,18 +14,18 @@ window.onload = function () {
     initialSquare = squares.find(sq => sq.floor === i);
     var floorDiv = document.createElement("div");
     floorDiv.id = "floor-" + i;
+
     // $(floorDiv).addClass("col-sm-6");
     $(floorDiv).addClass("floor");
-
     $(mapDiv).append(floorDiv);
 
-    createMap(initialSquare.name, initialSquare.type, initialSquare.bottomOf, initialSquare.leftOf, initialSquare.rightOf, initialSquare.topOf, floorDiv);
+    createMap(initialSquare.name, initialSquare.type, initialSquare.bottomOf, initialSquare.leftOf, initialSquare.rightOf, initialSquare.topOf, initialSquare.store, floorDiv);
 
     alreadyVisited = [];
   }
 };
 
-const createMap = (name, type, top, right, left, bottom, floorDiv) => {
+const createMap = (name, type, top, right, left, bottom, store, floorDiv) => {
   var squareElement = document.createElement("div");
   setColor(squareElement, type);
   $(floorDiv).append(squareElement);
@@ -58,7 +58,7 @@ const createRightNeighbor = (myElement, neighborName, floorDiv) => {
 
 
   let thisSpace = squares.find(square => square.name === neighborName);
-  setColor(neighborElement, thisSpace.type);
+  setColor(neighborElement, thisSpace.type, thisSpace.store);
   createNeighbors(neighborElement, thisSpace.bottomOf, thisSpace.leftOf, thisSpace.rightOf, thisSpace.topOf, floorDiv);
 }
 
@@ -82,7 +82,7 @@ const createBottomNeighbor = (myElement, neighborName, floorDiv) => {
 
 
   let thisSpace = squares.find(square => square.name === neighborName);
-  setColor(neighborElement, thisSpace.type);
+  setColor(neighborElement, thisSpace.type, thisSpace.store);
   createNeighbors(neighborElement, thisSpace.bottomOf, thisSpace.leftOf, thisSpace.rightOf, thisSpace.topOf, floorDiv);
 }
 
@@ -112,7 +112,7 @@ const createLeftNeighbor = (myElement, neighborName, floorDiv) => {
 
 
   let thisSpace = squares.find(square => square.name === neighborName);
-  setColor(neighborElement, thisSpace.type);
+  setColor(neighborElement, thisSpace.type, thisSpace.store);
   createNeighbors(neighborElement, thisSpace.bottomOf, thisSpace.leftOf, thisSpace.rightOf, thisSpace.topOf, floorDiv);
 }
 
@@ -140,7 +140,7 @@ const createTopNeighbor = (myElement, neighborName, floorDiv) => {
   $(floorDiv).append(neighborElement);
 
   let thisSpace = squares.find(square => square.name === neighborName);
-  setColor(neighborElement, thisSpace.type);
+  setColor(neighborElement, thisSpace.type, thisSpace.store);
   createNeighbors(neighborElement, thisSpace.bottomOf, thisSpace.leftOf, thisSpace.rightOf, thisSpace.topOf, floorDiv);
 }
 
@@ -172,7 +172,7 @@ const createNeighbors = (squareElement, top, right, left, bottom, floorDiv) => {
     createTopNeighbor(squareElement, top, floorDiv);
 }
 
-const setColor = (squareElement, type) => {
+const setColor = (squareElement, type, store) => {
   var color = "gray";
   switch (type) {
     case "Obstacle":
@@ -192,5 +192,10 @@ const setColor = (squareElement, type) => {
       break;
   }
 
+  if (store) {
+    color = "purple";
+  }
+
   $(squareElement).css('background', color);
 }
+
