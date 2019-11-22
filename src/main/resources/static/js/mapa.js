@@ -29,7 +29,7 @@ window.onload = function () {
 
 const createMap = (name, type, top, right, left, bottom, store, floorDiv) => {
   var squareElement = document.createElement("div");
-  setColor(squareElement, type);
+  setColor(squareElement, type, store);
   $(floorDiv).append(squareElement);
 
   $(squareElement).addClass("square");
@@ -60,7 +60,7 @@ const createRightNeighbor = (myElement, neighborName, floorDiv) => {
 
 
   let thisSpace = squares.find(square => square.name === neighborName);
-  setColor(neighborElement, thisSpace.type, thisSpace.store);
+  setColor(neighborElement, thisSpace.type, thisSpace.storeLabel);
   createNeighbors(neighborElement, thisSpace.bottomOf, thisSpace.leftOf, thisSpace.rightOf, thisSpace.topOf, floorDiv);
 }
 
@@ -84,7 +84,7 @@ const createBottomNeighbor = (myElement, neighborName, floorDiv) => {
 
 
   let thisSpace = squares.find(square => square.name === neighborName);
-  setColor(neighborElement, thisSpace.type, thisSpace.store);
+  setColor(neighborElement, thisSpace.type, thisSpace.storeLabel);
   createNeighbors(neighborElement, thisSpace.bottomOf, thisSpace.leftOf, thisSpace.rightOf, thisSpace.topOf, floorDiv);
 }
 
@@ -114,7 +114,7 @@ const createLeftNeighbor = (myElement, neighborName, floorDiv) => {
 
 
   let thisSpace = squares.find(square => square.name === neighborName);
-  setColor(neighborElement, thisSpace.type, thisSpace.store);
+  setColor(neighborElement, thisSpace.type, thisSpace.storeLabel);
   createNeighbors(neighborElement, thisSpace.bottomOf, thisSpace.leftOf, thisSpace.rightOf, thisSpace.topOf, floorDiv);
 }
 
@@ -142,7 +142,7 @@ const createTopNeighbor = (myElement, neighborName, floorDiv) => {
   $(floorDiv).append(neighborElement);
 
   let thisSpace = squares.find(square => square.name === neighborName);
-  setColor(neighborElement, thisSpace.type, thisSpace.store);
+  setColor(neighborElement, thisSpace.type, thisSpace.storeLabel);
   createNeighbors(neighborElement, thisSpace.bottomOf, thisSpace.leftOf, thisSpace.rightOf, thisSpace.topOf, floorDiv);
 }
 
@@ -203,7 +203,8 @@ const setColor = (squareElement, type, store) => {
 
 function findShortestPath() {
   var store = getStoreFromDropDown();
-  getPathToStore(store, 1);
+  var path = getPathToStore(store, "1");
+  console.log(path);
 }
 
 // DROPDOWN

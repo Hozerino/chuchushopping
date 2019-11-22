@@ -178,7 +178,7 @@ function getPathToStore(store, floor) {
         'data': JSON.stringify(postData),
         'dataType': 'json',
         'success': function (data) {
-            path.push(response)
+            path.push(data)
         }
     });
 
