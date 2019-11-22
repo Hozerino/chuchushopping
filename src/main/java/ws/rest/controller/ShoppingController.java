@@ -3,11 +3,10 @@ package ws.rest.controller;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ws.domain.SpaceService;
 import ws.infrastructure.OntologyUtil;
-import ws.rest.request.PathRequest;
 import ws.rest.response.PathResponse;
 import ws.rest.response.SpaceResponse;
-import ws.domain.SpaceService;
 
 import java.util.List;
 import java.util.Optional;
