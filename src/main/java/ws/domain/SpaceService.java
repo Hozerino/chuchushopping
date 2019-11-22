@@ -6,7 +6,6 @@ import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
 import org.springframework.stereotype.Service;
 import ws.infrastructure.OntologyUtil;
-import ws.rest.request.PathRequest;
 import ws.rest.response.PathResponse;
 import ws.rest.response.SpaceResponse;
 
@@ -107,12 +106,12 @@ public class SpaceService {
         return null;
     }
 
-    public List<PathResponse> getShortestPath(Space startSpace, PathRequest pathRequest) {
+    public List<PathResponse> getShortestPath(Space startSpace, String storeToBeFound) {
         if (startSpace == null) {
             startSpace = commercialCenterSpace;
         }
 
-        boolean shortestPathFound;
+        boolean shortestPathFound = false;
         Queue<Space> queue = new LinkedList<>();
         Set<Space> visitedSpaces = new HashSet<>();
         List<Space> shortestPath = new ArrayList<>();
@@ -125,7 +124,7 @@ public class SpaceService {
             Space nextSpace = queue.peek();
 
             if (nextSpace.getBelongsTo() != null) {
-                shortestPathFound = isDesiredSpace(pathRequest, nextSpace);
+                shortestPathFound = isDesiredSpace(storeToBeFound, nextSpace);
 
                 if (shortestPathFound) {
                     shortestPath = transverseMapToGetPath(nextSpace, parentSpaces);
@@ -141,22 +140,26 @@ public class SpaceService {
                 parentSpaces.put(unvisitedSpace, nextSpace);
 
                 if (unvisitedSpace.getBelongsTo() != null) {
-                    shortestPathFound = isDesiredSpace(pathRequest, unvisitedSpace);
+                    shortestPathFound = isDesiredSpace(storeToBeFound, unvisitedSpace);
 
                     if (shortestPathFound) {
-                        transverseMapToGetPath(unvisitedSpace, parentSpaces);
+                        shortestPath = transverseMapToGetPath(unvisitedSpace, parentSpaces);
                     }
                 }
             } else {
                 queue.poll();
+            }
+            
+            if (shortestPathFound) {
+                break;
             }
         }
 
         return PathResponse.convertSpaceListToPathList(shortestPath);
     }
 
-    private boolean isDesiredSpace(PathRequest pathRequest, Space space) {
-        return space.getBelongsTo().equals(pathRequest.getStoreToBeFound()) && space.getFloor().equals(pathRequest.getFloor());
+    private boolean isDesiredSpace(String storeToBeFound, Space space) {
+        return space.getBelongsTo().equalsIgnoreCase(storeToBeFound);
     }
 
     private Space getUnvisitedSpace(List<Space> spaces, Set<Space> visitedSpaces) {
@@ -178,6 +181,11 @@ public class SpaceService {
         }
 
         Collections.reverse(shortestPath);
+
+        if (shortestPath.get(shortestPath.size() - 1).getBelongsTo().equals(shortestPath.get(shortestPath.size() - 2).getBelongsTo())) {
+            shortestPath.remove(shortestPath.size() - 1);
+        }
+
         return shortestPath;
     }
 }
