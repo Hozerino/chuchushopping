@@ -1,8 +1,11 @@
+#map {
+    display: flex;
+    flex-direction : row
+}
+
 .floor {
     position  : relative;
     margin    : 0 auto;
-    width     : auto;
-    height    : auto;
     display: block;
     background: gray;
     box-sizing: border-box;
