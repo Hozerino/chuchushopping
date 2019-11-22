@@ -164,22 +164,12 @@ function getProducts() {
     return products;
 }
 
-function getPathToStore(store, floor) {
+function getPathToStore(store) {
 
     let path = [];
-    var postData = {
-        "store_to_be_found": store,
-        "floor": floor
-    }
-    jQuery.ajax({
-        'type': 'POST',
-        'url': "http://localhost:8080/api/shortest-paths",
-        'contentType': 'application/json',
-        'data': JSON.stringify(postData),
-        'dataType': 'json',
-        'success': function (data) {
-            path.push(data)
-        }
+
+    $.getJSON(`http://localhost:8080/api/shortest-paths/${store}`, function (data) {
+        path.push(data)
     });
 
     return path;

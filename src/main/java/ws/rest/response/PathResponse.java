@@ -17,7 +17,7 @@ public class PathResponse {
     private String belongsTo;
 
     public PathResponse(String name, String floor, String belongsTo) {
-        this.name = name;
+        this.name = name.replace(".", "_");
         this.floor = floor;
         this.belongsTo = belongsTo;
     }

@@ -1,6 +1,7 @@
 var alreadyVisited = [];
 const BLOCK_SIZE = 100;
 const SHIFT_SIZE = BLOCK_SIZE + 5;
+const PATH_BORDER_WIDTH = BLOCK_SIZE / 20;
 var squares;
 
 window.onload = function () {
@@ -29,7 +30,7 @@ window.onload = function () {
 
 const createMap = (name, type, top, right, left, bottom, store, floorDiv) => {
   var squareElement = document.createElement("div");
-  setColor(squareElement, type, store);
+  setColorAndStoreName(squareElement, type, store);
   $(floorDiv).append(squareElement);
 
   $(squareElement).addClass("square");
@@ -60,7 +61,7 @@ const createRightNeighbor = (myElement, neighborName, floorDiv) => {
 
 
   let thisSpace = squares.find(square => square.name === neighborName);
-  setColor(neighborElement, thisSpace.type, thisSpace.storeLabel);
+  setColorAndStoreName(neighborElement, thisSpace.type, thisSpace.storeLabel);
   createNeighbors(neighborElement, thisSpace.bottomOf, thisSpace.leftOf, thisSpace.rightOf, thisSpace.topOf, floorDiv);
 }
 
@@ -84,7 +85,7 @@ const createBottomNeighbor = (myElement, neighborName, floorDiv) => {
 
 
   let thisSpace = squares.find(square => square.name === neighborName);
-  setColor(neighborElement, thisSpace.type, thisSpace.storeLabel);
+  setColorAndStoreName(neighborElement, thisSpace.type, thisSpace.storeLabel);
   createNeighbors(neighborElement, thisSpace.bottomOf, thisSpace.leftOf, thisSpace.rightOf, thisSpace.topOf, floorDiv);
 }
 
@@ -114,7 +115,7 @@ const createLeftNeighbor = (myElement, neighborName, floorDiv) => {
 
 
   let thisSpace = squares.find(square => square.name === neighborName);
-  setColor(neighborElement, thisSpace.type, thisSpace.storeLabel);
+  setColorAndStoreName(neighborElement, thisSpace.type, thisSpace.storeLabel);
   createNeighbors(neighborElement, thisSpace.bottomOf, thisSpace.leftOf, thisSpace.rightOf, thisSpace.topOf, floorDiv);
 }
 
@@ -142,7 +143,7 @@ const createTopNeighbor = (myElement, neighborName, floorDiv) => {
   $(floorDiv).append(neighborElement);
 
   let thisSpace = squares.find(square => square.name === neighborName);
-  setColor(neighborElement, thisSpace.type, thisSpace.storeLabel);
+  setColorAndStoreName(neighborElement, thisSpace.type, thisSpace.storeLabel);
   createNeighbors(neighborElement, thisSpace.bottomOf, thisSpace.leftOf, thisSpace.rightOf, thisSpace.topOf, floorDiv);
 }
 
@@ -174,7 +175,7 @@ const createNeighbors = (squareElement, top, right, left, bottom, floorDiv) => {
     createTopNeighbor(squareElement, top, floorDiv);
 }
 
-const setColor = (squareElement, type, store) => {
+const setColorAndStoreName = (squareElement, type, store) => {
   var color = "gray";
   switch (type) {
     case "Obstacle":
@@ -195,6 +196,7 @@ const setColor = (squareElement, type, store) => {
   }
 
   if (store) {
+    $(squareElement).text(store);
     color = "purple";
   }
 
@@ -202,12 +204,39 @@ const setColor = (squareElement, type, store) => {
 }
 
 function findShortestPath() {
+  // tira a borda de todos
+  cleanupSquares();
+
   var store = getStoreFromDropDown();
-  var path = getPathToStore(store, "1");
-  console.log(path);
+  var path = getPathToStore(store);
+
+  paintSquares(path)
 }
 
-// DROPDOWN
+function paintSquares(path) {
+  console.log(path);
+  // por algum motivo o js trata como um array cuja primeira posicao eh o array de vdd
+  var realPath = path[0];
+
+  realPath.forEach(square => {
+    $(`#${square.name}`).css({
+      "border-color": 'black',
+      "border-width": PATH_BORDER_WIDTH + "px",
+      "border-style": "solid"
+    });
+  });
+}
+
+function cleanupSquares() {
+  $('.square').each(function () {
+    $(this).css('border-width', 0);
+  });
+}
+
+
+function getStoreFromDropDown() {
+  return $('#dropdown').val();
+}
 function intializeDropDown() {
   const stores = getLojas();
   // const stores = ["Gendai", "Americanas"];
@@ -216,8 +245,4 @@ function intializeDropDown() {
       $('<option></option>').val(store).text(store)
     );
   });
-}
-
-function getStoreFromDropDown() {
-  return $('#dropdown').val();
 }
