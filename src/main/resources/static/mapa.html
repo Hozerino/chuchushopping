@@ -15,20 +15,22 @@
 </head>
 
 <body>
-  <div class="pb-3">
+  <div class="container">
     <h2 class="">Qual loja deseja encontrar?</h2>
 
     <select class="form-control custom-select-lg col-sm-3" id="dropdown" required></select>
-    <button type="button" class="btn btn-lg btn-custom-dark col-md-4" onclick="findShortestPath()">
+    <button type="button" class="btn btn-lg btn-success col-sm-3" onclick="findShortestPath()">
       Localizar Loja
     </button>
+
     <div id="map"></div>
+  </div>
 
 
-    <script src="js/mapa.js"></script>
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="js/apiService.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="js/mapa.js"></script>
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="js/apiService.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

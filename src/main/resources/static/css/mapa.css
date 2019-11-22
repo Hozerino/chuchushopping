@@ -4,6 +4,7 @@
 }
 
 .floor {
+    flex: auto;
     position  : relative;
     margin    : 0 auto;
     display: block;
