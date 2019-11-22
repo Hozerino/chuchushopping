@@ -3,6 +3,16 @@
     flex-direction : row
 }
 
+.floor-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: auto;
+    position  : relative;
+    margin    : 0 auto;
+    display: block;
+    box-sizing: border-box;
+}
+
 .floor {
     flex: auto;
     position  : relative;

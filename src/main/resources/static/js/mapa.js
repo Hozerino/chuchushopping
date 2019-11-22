@@ -17,10 +17,19 @@ window.onload = function () {
     initialSquare = squares.find(sq => sq.floor === i);
     var floorDiv = document.createElement("div");
     floorDiv.id = "floor-" + i;
-
-    // $(floorDiv).addClass("col-sm-6");
     $(floorDiv).addClass("floor");
-    $(mapDiv).append(floorDiv);
+
+    var wrapper = document.createElement("div");
+    $(wrapper).addClass('floor-wrapper');
+
+
+    var floorText = document.createElement("h3");
+    $(floorText).text(`${i}º Andar`);
+    $(wrapper).append(floorText);
+
+    $(mapDiv).append(wrapper);
+    $(wrapper).append(floorDiv);
+
 
     createMap(initialSquare.name, initialSquare.type, initialSquare.bottomOf, initialSquare.leftOf, initialSquare.rightOf, initialSquare.topOf, initialSquare.store, floorDiv);
 
