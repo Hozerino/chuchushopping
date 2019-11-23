@@ -154,7 +154,7 @@ function getProducts() {
             var product = {
                 name: linha.productLabel.value,
                 price: linha.price.value,
-                category: linha.category.price
+                category: linha.category.value
             }
 
             products.push(product);
