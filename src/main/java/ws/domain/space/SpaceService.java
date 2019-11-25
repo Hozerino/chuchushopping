@@ -1,4 +1,4 @@
-package ws.domain;
+package ws.domain.space;
 
 import org.apache.jena.ontology.Individual;
 import org.apache.jena.rdf.model.Model;

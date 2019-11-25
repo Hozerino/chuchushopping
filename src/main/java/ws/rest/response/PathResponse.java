@@ -1,7 +1,7 @@
 package ws.rest.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import ws.domain.Space;
+import ws.domain.space.Space;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,7 @@ public class PathResponse {
     @JsonProperty("belongs_to")
     private String belongsTo;
 
-    public PathResponse(String name, String floor, String belongsTo) {
+    private PathResponse(String name, String floor, String belongsTo) {
         this.name = name.replace(".", "_");
         this.floor = floor;
         this.belongsTo = belongsTo;
