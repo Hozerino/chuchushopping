@@ -22,7 +22,6 @@ public class UserService {
         return userRepository.getUserByCPF(CPF);
     }
 
-    //TODO fazer funcionar
     public List<String> getRecommendedStoresForUser(User user) {
         List<String> queryResults = new ArrayList<>();
         user.getLikes().forEach(taste -> {
@@ -30,7 +29,7 @@ public class UserService {
                     "WHERE {\n" +
                     "    [a :Store;\n" +
                     "        rdfs:label ?name;\n" +
-                    "        :sells \"%s\";]" +
+                    "        :sells [a :Product; :hasCategory [a :Category ; rdfs:label \"%s\"]]]" +
                     "}", taste)));
         });
         return queryResults;
