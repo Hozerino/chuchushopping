@@ -322,6 +322,19 @@
 
 
 
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#BigMac
+
+:BigMac rdf:type :Product ,
+                 owl:NamedIndividual ;
+        
+        rdfs:label "BigMac"^^xsd:string ;
+        
+        :price "16.99"^^xsd:double ;
+        
+        :hasCategory :Comida .
+
+
+
 ###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#Brenno_Cremonini
 
 :Brenno_Cremonini rdf:type :User ,
@@ -532,7 +545,9 @@
 :Corredor2-7 rdf:type :Walkable ,
                       owl:NamedIndividual ;
              
-             :floor 2 .
+             :floor 2 ;
+             
+             :belongsTo :McDonalds .
 
 
 
@@ -813,6 +828,21 @@
           :website "www.marabraz.com.br"^^xsd:string ;
           
           :sells :Escrivaninha_de_Madeira .
+
+
+
+###  http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#McDonalds
+
+:McDonalds rdf:type :Store ,
+                    owl:NamedIndividual ;
+           
+           rdfs:label "McDonalds"^^xsd:string ;
+           
+           :telephone "1185579833"^^xsd:string ;
+           
+           :website "www.mcdonalds.com.br"^^xsd:string ;
+           
+           :sells :BigMac .
 
 
 
