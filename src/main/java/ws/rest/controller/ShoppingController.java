@@ -30,7 +30,6 @@ public class ShoppingController {
     @GetMapping("/lojas")
     public String getStores() {
         String response = OntologyUtil.sparql("SELECT ?loja WHERE {[a :Store; rdfs:label ?loja]}");
-        System.out.println(response);
         return response;
     }
 
