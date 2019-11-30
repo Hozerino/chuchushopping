@@ -298,8 +298,7 @@
 :Americanas rdf:type :Store ,
                      owl:NamedIndividual ;
             
-            rdfs:label """Americanas
-""" ;
+            rdfs:label "Americanas"^^xsd:string ;
             
             :telephone "1189478456"^^xsd:string ;
             
@@ -740,11 +739,11 @@
            
            :floor 2 ;
            
-           :belongsTo :Americanas ;
-           
            :leftOf :Corredor2-4 ;
            
            :bottomOf :Loja2-1.2 ;
+           
+           :belongsTo :Marabraz ;
            
            :topOf :Parede2-5 .
 
@@ -757,9 +756,9 @@
            
            :floor 2 ;
            
-           :belongsTo :Americanas ;
+           :leftOf :Corredor2-6 ;
            
-           :leftOf :Corredor2-6 .
+           :belongsTo :Marabraz .
 
 
 
@@ -772,9 +771,9 @@
            
            :rightOf :Corredor2-3 ;
            
-           :bottomOf :Loja2-2.2 ;
+           :belongsTo :Gendai ;
            
-           :belongsTo :Xiaomi .
+           :bottomOf :Loja2-2.2 .
 
 
 
@@ -789,7 +788,7 @@
            
            :bottomOf :Elevador2 ;
            
-           :belongsTo :Xiaomi .
+           :belongsTo :Gendai .
 
 
 
@@ -1001,9 +1000,9 @@
 :Shopping_Ibirapuera rdf:type :CommercialCenter ,
                               owl:NamedIndividual ;
                      
-                     :bottomOf :Corredor1-2 ;
-
                      :floor 1 ;
+                     
+                     :bottomOf :Corredor1-2 ;
                      
                      :leftOf :Parede1-3 .
 

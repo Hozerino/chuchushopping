@@ -50,13 +50,13 @@ public class ShoppingController {
         // https://morelab.deusto.es/code_injection/files/sparql_injection.pdf
         // mas a gente ta liberando endpoint de sparql entao dane-se
 
-        return OntologyUtil.sparql(String.format("SELECT ?nome ?telefone ?website ?produtos\n" +
+        return OntologyUtil.sparql(String.format("SELECT ?telefone ?website\n" +
                 "WHERE {\n" +
                 "    [a :Store;\n" +
                 "        rdfs:label \"%s\";\n" +
                 "        :website ?website;\n" +
                 "        :telephone ?telefone]\n" +
-                "}", label));
+                "}", label.trim()));
     }
 
     // fica meio pt/en pq o front fica mais bonito se usar os endpoint BR,
@@ -73,7 +73,7 @@ public class ShoppingController {
                             "        rdfs:label ?productLabel ;\n" +
                             "        :price ?price ;\n" +
                             "        :hasCategory [a :Category ; rdfs:label ?category]]]\n" +
-                            "}", storeLabel
+                            "}", storeLabel.trim()
             ));
         }
         return OntologyUtil.sparql("SELECT ?productLabel ?price ?category\n" +
