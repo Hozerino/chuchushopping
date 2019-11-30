@@ -7,17 +7,27 @@ function buildHtmlInfo() {
     const urlParams = new URLSearchParams(window.location.search);
     const storeLabel = urlParams.get('loja');
 
-    buildTitle(storeLabel);
-    buildProductsList(storeLabel);
-}
+    var storeInfo = getStoreInfo(storeLabel);
 
-function buildTitle(storeLabel) {
+    // Titulo
     $('#store-label').text('Loja: ' + storeLabel);
 
+    buildStoreContact(storeInfo);
+    buildProductsList(storeInfo);
 }
-function buildProductsList(storeLabel) {
 
-    var storeInfo = getStoreInfo(storeLabel);
+function buildStoreContact(storeInfo) {
+    var html = [
+        '<div class="col-lg-4 col-md-6 mb-4">\n',
+          '<p><b>Telefone</b>: ' + storeInfo.telefone + '</p>',
+          '<p><b>Website</b>: ' + storeInfo.website + '</p>',
+        '</div>\n']
+
+
+    $('#store-info').append(html.join(''));
+}
+
+function buildProductsList(storeInfo) {
     let products = storeInfo.produtos;
 
     var arrayLength = products.length;
