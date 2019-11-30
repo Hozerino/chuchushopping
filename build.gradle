@@ -19,6 +19,9 @@ dependencies {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
 
+	implementation 'com.h2database:h2'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
 	compile group: 'org.apache.jena', name: 'jena-arq', version: '3.13.1'
 	compile group: 'edu.stanford.protege', name: 'code-generation', version: '2.0.0'
 

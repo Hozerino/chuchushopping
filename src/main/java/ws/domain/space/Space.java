@@ -1,4 +1,4 @@
-package ws.domain;
+package ws.domain.space;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,8 +32,7 @@ public class Space {
         this.floor = floor;
     }
 
-
-    public boolean isWalkable() {
+    boolean isWalkable() {
         return isWalkable;
     }
 
@@ -45,27 +44,7 @@ public class Space {
         return belongsTo;
     }
 
-    final Space downNeighbor() {
-        return topOf;
-    }
-
-    final Space topNeighbor() {
-        return bottomOf;
-    }
-
-    final Space leftNeighbor() {
-        return rightOf;
-    }
-
-    final Space rightNeighbor() {
-        return leftOf;
-    }
-
-    public Space getConnects() {
-        return connects;
-    }
-
-    public List<Space> getNeighbors() {
+    List<Space> getNeighbors() {
         List<Space> neighbors = new ArrayList<>();
 
         if (topOf != null) {
@@ -92,7 +71,7 @@ public class Space {
     }
 
 
-    public void setSpaceProperties(String property, Space neighbor) {
+    void setSpaceProperties(String property, Space neighbor) {
         switch (property) {
             case "topOf":
                 this.topOf = (neighbor);
