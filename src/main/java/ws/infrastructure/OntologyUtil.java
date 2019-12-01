@@ -1,5 +1,8 @@
 package ws.infrastructure;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.jena.ontology.Individual;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.ontology.OntModelSpec;
@@ -11,6 +14,7 @@ import ws.WsApplication;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -92,6 +96,21 @@ public class OntologyUtil {
         }
 
         return "Unknown";
+    }
+
+    public static List<String> getCategories() throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        JsonNode jsonNode = objectMapper.readTree(sparql("SELECT ?category WHERE {" +
+                " [a :Category;" +
+                "rdfs:label ?category" +
+                "]}"));
+
+        List<String> categories = new ArrayList<>();
+
+        jsonNode.get("results").get("bindings").findValues("category").forEach(cat -> categories.add(cat.get("value").asText()));
+
+        return categories;
     }
 
     public static String defaultSchema() {

@@ -94,6 +94,18 @@ $.extend({
     }
 });
 
+function getCategories() {
+    let categories = [];
+
+    $.getJSON("http://localhost:8080/api/categories", function (data) {
+        $.each(data, function (index, category) {
+            categories.push(category);
+        })
+    });
+
+    return categories;
+}
+
 function createUser(user) {
     $.jpost('http://localhost:8080/api/users', user).then(res => {
         // TODO tratar erros

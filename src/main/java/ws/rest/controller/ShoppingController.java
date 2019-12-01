@@ -1,5 +1,6 @@
 package ws.rest.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -51,6 +52,11 @@ public class ShoppingController {
     @GetMapping("/recommended-stores/{cpf}")
     public ResponseEntity<List<String>> getRecommendedStoresForUser(@PathVariable String cpf) {
         return ResponseEntity.ok(userService.getRecommendedStoresForUser(cpf));
+    }
+
+    @GetMapping("/categories")
+    public ResponseEntity<List<String>> getCategories() throws JsonProcessingException {
+        return ResponseEntity.ok(OntologyUtil.getCategories());
     }
 
     @GetMapping("/shortest-paths/{store}")
