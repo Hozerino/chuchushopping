@@ -27,17 +27,23 @@ function newUser() {
     password: null
   }
 
-  name = $('#name').val();
-  cellphone = $("#phone").val();
-  cpf = $("#cpf").val();
-  likes = $("#categories").val();
-  password = $("#password").val();
+  user.name = $('#name').val();
+  user.cellphone = $("#phone").val();
+  user.cpf = $("#cpf").val();
+  user.likes = $("#categories").val();
+  user.password = $("#password").val();
 
-  if (!(name && cellphone && cpf && password)) {
+  if (isEmpty(user.name) || isEmpty(user.cellphone) || isEmpty(user.cpf) || isEmpty(user.password)) {
     alert("Preencha todos os campos (com exceção das categorias, que é opcional)!")
   } else {
 
     createUser(user);
     location.href = 'user-stores.html?cpf=' + user.cpf;
   }
+}
+
+function isEmpty(o) {
+  return Object.keys(o).every(function (x) {
+    return o[x] === '' || o[x] === null;  // or just "return o[x];" for falsy values
+  });
 }
