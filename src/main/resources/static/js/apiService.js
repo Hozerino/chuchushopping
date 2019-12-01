@@ -83,7 +83,7 @@ function buildProperSpaces() {
 }
 
 $.extend({
-    jpost: function(url, body) {
+    jpost: function (url, body) {
         return $.ajax({
             type: 'POST',
             url: url,
@@ -109,7 +109,7 @@ function getCategories() {
 function createUser(user) {
     $.jpost('http://localhost:8080/api/users', user).then(res => {
         // TODO tratar erros
-        console.log(res);
+        alert("Usuário " + user.name + " criado!");
     });
 }
 

@@ -45,6 +45,7 @@
             </div>
         </div>
     </nav>
+
     <!-- Page Content -->
     <div class="container">
 
@@ -52,25 +53,46 @@
 
             <div class="col-lg-3">
 
-                <h1 class="my-4" id="store-label">Shop Name</h1>
+                <h1 class="my-4"">Cadastro</h1>
             </div>
 
         </div>
-        <!-- /.col-lg-3 -->
-        <div class="col-lg-3">
-            <div class="row" id="store-info">
-            </div>
-        </div>
-        <h2>Produtos:</h2>
-        <div class="col-lg-9">
-            <div class="row" id="store-products">
-            </div>
-            <!-- /.row -->
-        </div>
-        <!-- /.col-lg-9 -->
 
-    </div>
-    <!-- /.row -->
+        <form>
+            <div class=" form-group">
+                    <label for="name">Password</label>
+                    <input type="text" class="form-control" id="name" placeholder="Name">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Telefone</label>
+                <input type="number" class="form-control" id="phone" placeholder="11999999999">
+            </div>
+
+            <div class=" form-group">
+                <label for="cpf">CPF</label>
+                <input type="text" class="form-control" id="cpf" placeholder="Coloque seu CPF">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="Password">
+            </div>
+
+            <div class="form-group">
+                <label for="categories">Categorias que você gosta</label>
+                <select multiple class="form-control" id="categories">
+                    <!-- OPTIONS PELO JQUERY -->
+                </select>
+            </div>
+
+
+            <button type="submit" class="btn btn-primary" onclick="newUser()">Submit</button>
+            </form>
+
+
+        </div>
+        <!-- /.row -->
 
     </div>
     <!-- /.container -->
@@ -86,7 +108,7 @@
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="js/apiService.js"></script>
-    <script src="js/loja-single.js"></script>
+    <script src="js/create-user.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 </body>
