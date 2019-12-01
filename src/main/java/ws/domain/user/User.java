@@ -13,7 +13,8 @@ import java.util.List;
 public class User {
     @JsonProperty
     private String name;
-        @Id
+
+    @Id
     @JsonProperty
     private String CPF;
 
@@ -24,11 +25,19 @@ public class User {
     @JsonProperty
     private List<String> likes;
 
-    public User(String name, String CPF, String cellphone, List<String> likes) {
+    public String getPassword() {
+        return password;
+    }
+
+    @JsonProperty
+    private String password;
+
+    public User(String name, String CPF, String cellphone, List<String> likes, String password) {
         this.name = name;
         this.CPF = CPF;
         this.cellphone = cellphone;
         this.likes = likes;
+        this.password = password;
     }
 
     public User() {

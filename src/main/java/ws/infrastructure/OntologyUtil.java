@@ -56,6 +56,7 @@ public class OntologyUtil {
         Resource clazz = specificModel.getResource(schema + type);
         return ((OntModel) specificModel).listIndividuals(clazz).toList();
     }
+
     public static Model model() {
         return model;
     }
@@ -77,16 +78,16 @@ public class OntologyUtil {
                 .map(stmt -> stmt.getResource().getLocalName())
                 .collect(Collectors.toList());
 
-        if(types.contains("CommercialCenter")) {
+        if (types.contains("CommercialCenter")) {
             return "CommercialCenter";
         }
-        if(types.contains("Gateway")) {
+        if (types.contains("Gateway")) {
             return "Gateway";
         }
-        if(types.contains("Walkable")) {
+        if (types.contains("Walkable")) {
             return "Walkable";
         }
-        if(types.contains("Obstacle")) {
+        if (types.contains("Obstacle")) {
             return "Obstacle";
         }
 

@@ -4,9 +4,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ws.domain.space.SpaceService;
+import ws.domain.user.UserService;
 import ws.infrastructure.OntologyUtil;
+import ws.rest.controller.request.LoginRequest;
 import ws.rest.response.PathResponse;
 import ws.rest.response.SpaceResponse;
+import ws.domain.user.User;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,9 +20,11 @@ import java.util.Optional;
 public class ShoppingController {
 
     private final SpaceService spaceService;
+    private final UserService userService;
 
-    public ShoppingController(SpaceService spaceService) {
+    public ShoppingController(SpaceService spaceService, UserService userService) {
         this.spaceService = spaceService;
+        this.userService = userService;
     }
 
     @GetMapping("/sparql")
@@ -31,6 +36,21 @@ public class ShoppingController {
     public String getStores() {
         String response = OntologyUtil.sparql("SELECT ?loja WHERE {[a :Store; rdfs:label ?loja]}");
         return response;
+    }
+
+    @PostMapping("/users")
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        return ResponseEntity.ok(userService.saveUser(user));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<User> login(@RequestBody LoginRequest loginRequest) {
+        return ResponseEntity.ok(userService.loginUser(loginRequest));
+    }
+
+    @GetMapping("/recommended-stores/{cpf}")
+    public ResponseEntity<List<String>> getRecommendedStoresForUser(@PathVariable String cpf) {
+        return ResponseEntity.ok(userService.getRecommendedStoresForUser(cpf));
     }
 
     @GetMapping("/shortest-paths/{store}")
