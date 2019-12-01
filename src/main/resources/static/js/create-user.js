@@ -27,12 +27,17 @@ function newUser() {
     password: null
   }
 
-  user.name = $('#name').val();
-  user.cellphone = $("#phone").val();
-  user.cpf = $("#cpf").val();
-  user.likes = $("#categories").val();
-  user.password = $("#password").val();
+  name = $('#name').val();
+  cellphone = $("#phone").val();
+  cpf = $("#cpf").val();
+  likes = $("#categories").val();
+  password = $("#password").val();
 
-  createUser(user);
-  location.href = 'user-stores.html?cpf=' + user.cpf;
+  if (!(name && cellphone && cpf && password)) {
+    alert("Preencha todos os campos (com exceção das categorias, que é opcional)!")
+  } else {
+
+    createUser(user);
+    location.href = 'user-stores.html?cpf=' + user.cpf;
+  }
 }
