@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ws.domain.space.SpaceService;
 import ws.domain.user.UserService;
 import ws.infrastructure.OntologyUtil;
-import ws.rest.controller.request.LoginRequest;
+import ws.rest.request.LoginRequest;
 import ws.rest.response.PathResponse;
 import ws.rest.response.SpaceResponse;
 import ws.domain.user.User;

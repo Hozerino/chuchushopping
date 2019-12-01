@@ -8,7 +8,7 @@ import ws.exception.InvalidPasswordException;
 import ws.exception.UserAlreadyExistsException;
 import ws.exception.UserNotFoundException;
 import ws.infrastructure.OntologyUtil;
-import ws.rest.controller.request.LoginRequest;
+import ws.rest.request.LoginRequest;
 
 import java.util.ArrayList;
 import java.util.List;

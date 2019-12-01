@@ -1,4 +1,4 @@
-package ws.rest.controller.request;
+package ws.rest.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
