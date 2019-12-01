@@ -10,17 +10,6 @@ function buildHtmlInfo() {
 
 
 function buildProductsList() {
-    let user = {
-        name: "Jose",
-        CPF: "1234567823123",
-        cellphone: "949498999",
-        likes:[
-            "Comida","b"
-        ],
-        password: "abcde"
-    };
-    createUser(user);
-    createUser(user);
     let products = getProducts();
 
     var arrayLength = products.length;
