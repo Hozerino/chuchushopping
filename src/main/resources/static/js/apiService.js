@@ -82,6 +82,42 @@ function buildProperSpaces() {
     return spaces;
 }
 
+$.extend({
+    jpost: function(url, body) {
+        return $.ajax({
+            type: 'POST',
+            url: url,
+            data: JSON.stringify(body),
+            contentType: "application/json",
+            dataType: 'json'
+        });
+    }
+});
+
+function createUser(user) {
+    $.jpost('http://localhost:8080/api/users', user).then(res => {
+        // TODO tratar erros
+        console.log(res);
+    });
+}
+
+function login(loginInfo) {
+    $.jpost('http://localhost:8080/api/login', loginInfo).then(res => {
+        // TODO tratar erros
+        console.log(res);
+    });
+}
+
+function getRecommendedStores(CPF) {
+    let recommendations = [];
+    $.getJSON('http://localhost:8080/api/recommended-stores/' + CPF, function (data) {
+        $.each(data, function (index, rec) {
+            recommendations.push(rec)
+        });
+    });
+    return recommendations;
+}
+
 function getStoreInfo(label) {
     var loja = {
         nome: label,
