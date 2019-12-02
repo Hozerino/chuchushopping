@@ -4,16 +4,22 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.jena.ontology.Individual;
+import org.apache.jena.ontology.OntClass;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.ontology.OntModelSpec;
 import org.apache.jena.query.*;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.reasoner.Reasoner;
 import org.apache.jena.reasoner.ReasonerRegistry;
+import org.apache.jena.vocabulary.OWL2;
+import org.apache.jena.vocabulary.RDFS;
 import ws.WsApplication;
+import ws.domain.user.User;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -155,5 +161,49 @@ public class OntologyUtil {
 
     public static Individual getCommercialCenterIndividual() {
         return OntologyUtil.getAllIndividualsOfType("CommercialCenter", model).get(0);
+    }
+
+    private static List<Property> getUserProperties() {
+        Property cpf = model.getProperty(schema + "cpf");
+        Property celphone = model.getProperty(schema + "celphone");
+        Property likes = model.getProperty(schema + "likes");
+
+        return Arrays.asList(cpf, celphone, likes);
+    }
+
+    private static Resource getResourceWithName(String name) {
+        return model.getResource(schema + name);
+    }
+
+    public static void createUser(User user) {
+        OntModel ontModel = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM);
+        ontModel.read(owl.getAbsolutePath());
+
+        List<Property> props = getUserProperties();
+
+        OntClass userClass = ontModel.getOntClass(schema + "User");
+        Individual newUser = ontModel.createIndividual(schema + user.getName(), userClass);
+        newUser.addRDFType(OWL2.NamedIndividual);
+        newUser.addProperty(RDFS.label, user.getName());
+
+        props.forEach(prop -> {
+            switch (prop.getLocalName()) {
+                case "cpf":
+                    newUser.addProperty(prop, user.getCPF());
+                    break;
+                case "celphone":
+                    newUser.addProperty(prop, user.getCellphone());
+                    break;
+                case "likes":
+                    user.getLikes().forEach(like -> newUser.addProperty(prop, getResourceWithName(like)));
+                    break;
+            }
+        });
+
+        try (FileWriter out = new FileWriter("src/main/resources/users.ttl")) {
+            ontModel.write(out, "TURTLE");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
