@@ -3,44 +3,39 @@ package ws.domain.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
 import java.util.List;
 
-@Entity
 public class User {
+
     @JsonProperty
     private String name;
 
-    @Id
-    @JsonProperty
-    private String CPF;
+    @JsonProperty(
+            "CPF")
+    private String cpf;
 
     @JsonProperty
     private String cellphone;
 
-    @ElementCollection(fetch = FetchType.EAGER)
     @JsonProperty
     private List<String> likes;
-
-    public String getPassword() {
-        return password;
-    }
 
     @JsonProperty
     private String password;
 
-    public User(String name, String CPF, String cellphone, List<String> likes, String password) {
+    public User(String name, String cpf, String cellphone, List<String> likes, String password) {
         this.name = name;
-        this.CPF = CPF;
+        this.cpf = cpf;
         this.cellphone = cellphone;
         this.likes = likes;
         this.password = password;
     }
 
     public User() {
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public String getName() {
@@ -51,12 +46,12 @@ public class User {
         this.name = name;
     }
 
-    public String getCPF() {
-        return CPF;
+    public String getCpf() {
+        return cpf;
     }
 
-    public void setCPF(String CPF) {
-        this.CPF = CPF;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public String getCellphone() {

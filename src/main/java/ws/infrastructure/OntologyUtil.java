@@ -4,22 +4,27 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.jena.ontology.Individual;
-import org.apache.jena.ontology.OntClass;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.ontology.OntModelSpec;
-import org.apache.jena.query.*;
-import org.apache.jena.rdf.model.*;
+import org.apache.jena.query.Query;
+import org.apache.jena.query.QueryExecution;
+import org.apache.jena.query.QueryExecutionFactory;
+import org.apache.jena.query.QueryFactory;
+import org.apache.jena.query.ResultSet;
+import org.apache.jena.query.ResultSetFormatter;
+import org.apache.jena.rdf.model.InfModel;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.reasoner.Reasoner;
 import org.apache.jena.reasoner.ReasonerRegistry;
-import org.apache.jena.vocabulary.OWL2;
-import org.apache.jena.vocabulary.RDFS;
 import ws.WsApplication;
-import ws.domain.user.User;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,7 +35,7 @@ public class OntologyUtil {
 
     private static final String TURTLE_LANGUAGE = "TTL";
 
-    private static final String schema = "http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#";
+    protected static final String schema = "http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#";
     private static final File owl = new File(Objects.requireNonNull(WsApplication.class.getClassLoader().getResource("ws.ttl")).getFile());
     private static final Model model = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM);
     private static final Model modelWithoutInf = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM);
@@ -48,6 +53,16 @@ public class OntologyUtil {
     }
 
     public static String sparql(String query) {
+        String fullQuery = sparQLPrefixes + query;
+        Query q = QueryFactory.create(fullQuery);
+        QueryExecution qe = QueryExecutionFactory.create(q, model);
+
+        ResultSet res = qe.execSelect();
+
+        return toJson(res);
+    }
+
+    public static String executeSparqlWithSpecificModel(String query, Model model) {
         String fullQuery = sparQLPrefixes + query;
         Query q = QueryFactory.create(fullQuery);
         QueryExecution qe = QueryExecutionFactory.create(q, model);
@@ -163,7 +178,7 @@ public class OntologyUtil {
         return OntologyUtil.getAllIndividualsOfType("CommercialCenter", model).get(0);
     }
 
-    private static List<Property> getUserProperties() {
+    static List<Property> getUserProperties() {
         Property cpf = model.getProperty(schema + "cpf");
         Property celphone = model.getProperty(schema + "celphone");
         Property likes = model.getProperty(schema + "likes");
@@ -171,37 +186,14 @@ public class OntologyUtil {
         return Arrays.asList(cpf, celphone, likes);
     }
 
-    private static Resource getResourceWithName(String name) {
+    static Resource getResourceWithName(String name) {
         return model.getResource(schema + name);
     }
 
-    public static void createUser(User user) {
-        OntModel ontModel = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM);
-        ontModel.read(owl.getAbsolutePath());
-
-        List<Property> props = getUserProperties();
-
-        OntClass userClass = ontModel.getOntClass(schema + "User");
-        Individual newUser = ontModel.createIndividual(schema + user.getName(), userClass);
-        newUser.addRDFType(OWL2.NamedIndividual);
-        newUser.addProperty(RDFS.label, user.getName());
-
-        props.forEach(prop -> {
-            switch (prop.getLocalName()) {
-                case "cpf":
-                    newUser.addProperty(prop, user.getCPF());
-                    break;
-                case "celphone":
-                    newUser.addProperty(prop, user.getCellphone());
-                    break;
-                case "likes":
-                    user.getLikes().forEach(like -> newUser.addProperty(prop, getResourceWithName(like)));
-                    break;
-            }
-        });
-
-        try (FileWriter out = new FileWriter("src/main/resources/users.ttl")) {
+    static void writeData(OntModel ontModel) {
+        try (OutputStream out = new FileOutputStream("src/main/resources/user.ttl")) {
             ontModel.write(out, "TURTLE");
+            out.flush();
         } catch (Exception e) {
             e.printStackTrace();
         }

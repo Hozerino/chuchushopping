@@ -1,0 +1,403 @@
+@prefix :      <http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xml:   <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+
+:Eletronicos  a     :Category , owl:NamedIndividual ;
+        rdfs:label  "Eletronicos" .
+
+:wow    a           :User , owl:NamedIndividual ;
+        rdfs:label  "wow" ;
+        :celphone   "123456" ;
+        :cpf        "abcdefg" , "abcde" , "asd" , "abcdessss" ;
+        :likes      :Maquiagem , :Comida .
+
+:Marabraz  a        :Store , owl:NamedIndividual ;
+        rdfs:label  "Marabraz" ;
+        :sells      :Escrivaninha_de_Madeira ;
+        :telephone  "1165237845" ;
+        :website    "www.marabraz.com.br" .
+
+:Corredor2-4  a    :Walkable , owl:NamedIndividual ;
+        :bottomOf  :Corredor2-6 ;
+        :floor     2 .
+
+:Loja2-2.2  a       :Walkable , owl:NamedIndividual ;
+        :belongsTo  :Gendai ;
+        :bottomOf   :Elevador2 ;
+        :floor      2 ;
+        :rightOf    :Corredor2-5 .
+
+:BigMac  a            :Product , owl:NamedIndividual ;
+        rdfs:label    "BigMac" ;
+        :hasCategory  :Comida ;
+        :price        "16.99"^^xsd:double .
+
+:Danilo_Dainez  a   :User , owl:NamedIndividual ;
+        rdfs:label  "Danilo Dainez" ;
+        :celphone   "11927556412" ;
+        :cpf        "36423893907" ;
+        :likes      :Celular , :Roupa .
+
+:Loja2-1.2  a       :Walkable , owl:NamedIndividual ;
+        :belongsTo  :Marabraz ;
+        :floor      2 ;
+        :leftOf     :Corredor2-6 .
+
+:Corredor1-4  a    :Walkable , owl:NamedIndividual ;
+        :bottomOf  :Corredor1-6 ;
+        :floor     1 .
+
+:price  a            owl:DatatypeProperty ;
+        rdfs:domain  :Product ;
+        rdfs:range   xsd:double .
+
+:User   a       owl:Class .
+
+:Celular  a         :Category , owl:NamedIndividual ;
+        rdfs:label  "Celular" .
+
+:topOf  a            owl:FunctionalProperty , owl:InverseFunctionalProperty , owl:ObjectProperty ;
+        rdfs:domain  :Space ;
+        rdfs:range   :Space .
+
+:Parede2-5  a    :Obstacle , owl:NamedIndividual ;
+        :floor   2 ;
+        :leftOf  :Corredor2-1 .
+
+:Gateway  a              owl:Class ;
+        rdfs:subClassOf  :Walkable .
+
+:Loja2-2.1  a       :Walkable , owl:NamedIndividual ;
+        :belongsTo  :Gendai ;
+        :bottomOf   :Loja2-2.2 ;
+        :floor      2 ;
+        :rightOf    :Corredor2-3 .
+
+:Loja1-2.2  a       :Walkable , owl:NamedIndividual ;
+        :belongsTo  :Xiaomi ;
+        :bottomOf   :Elevador1 ;
+        :floor      1 ;
+        :rightOf    :Corredor1-5 .
+
+:Maquiagem  a       :Category , owl:NamedIndividual ;
+        rdfs:label  "Maquiagem" .
+
+:Corredor2-3  a    :Walkable , owl:NamedIndividual ;
+        :bottomOf  :Corredor2-5 ;
+        :floor     2 ;
+        :rightOf   :Corredor2-2 .
+
+:connects  a         owl:ObjectProperty , owl:SymmetricProperty ;
+        rdfs:domain  :Gateway ;
+        rdfs:range   :Gateway .
+
+:Parede1-5  a    :Obstacle , owl:NamedIndividual ;
+        :floor   1 ;
+        :leftOf  :Corredor1-1 .
+
+:McDonalds  a       :Store , owl:NamedIndividual ;
+        rdfs:label  "McDonalds" ;
+        :sells      :BigMac ;
+        :telephone  "1185579833" ;
+        :website    "www.mcdonalds.com.br" .
+
+:cpf    a            owl:DatatypeProperty ;
+        rdfs:domain  :User ;
+        rdfs:range   xsd:string .
+
+:Loja2-1.1  a       :Walkable , owl:NamedIndividual ;
+        :belongsTo  :Marabraz ;
+        :bottomOf   :Loja2-1.2 ;
+        :floor      2 ;
+        :leftOf     :Corredor2-4 ;
+        :topOf      :Parede2-5 .
+
+:Corredor1-3  a    :Walkable , owl:NamedIndividual ;
+        :bottomOf  :Corredor1-5 ;
+        :floor     1 ;
+        :rightOf   :Corredor1-2 .
+
+:Loja1-1.2  a       :Walkable , owl:NamedIndividual ;
+        :belongsTo  :Americanas ;
+        :floor      1 ;
+        :leftOf     :Corredor1-6 .
+
+:bottomOf  a           owl:FunctionalProperty , owl:InverseFunctionalProperty , owl:ObjectProperty ;
+        rdfs:domain    :Space ;
+        rdfs:range     :Space ;
+        owl:inverseOf  :topOf .
+
+:Americanas  a      :Store , owl:NamedIndividual ;
+        rdfs:label  "Americanas" ;
+        :sells      :Base_Mary_Kay , :Camiseta_GNU ;
+        :telephone  "1189478456" ;
+        :website    "www.americanas.com.br" .
+
+:Moveis  a          :Category , owl:NamedIndividual ;
+        rdfs:label  "Moveis" .
+
+:Corredor2-8  a   :Walkable , owl:NamedIndividual ;
+        :floor    2 ;
+        :leftOf   :Elevador2 ;
+        :rightOf  :Corredor2-7 .
+
+:Shopping_Ibirapuera  a  :CommercialCenter , owl:NamedIndividual ;
+        :bottomOf  :Corredor1-2 ;
+        :floor     1 ;
+        :leftOf    :Parede1-3 .
+
+:buys   a            owl:ObjectProperty ;
+        rdfs:domain  :User ;
+        rdfs:range   :Product .
+
+:Parede2-4  a      :Obstacle , owl:NamedIndividual ;
+        :bottomOf  :Loja2-2.1 ;
+        :floor     2 .
+
+:Obstacle  a              owl:Class ;
+        rdfs:comment      "Local que nao pode ser caminhado sobre, como uma fonte, por exemplo" ;
+        rdfs:subClassOf   :Space ;
+        owl:disjointWith  :Walkable .
+
+:hasCategory  a      owl:ObjectProperty ;
+        rdfs:domain  :Product ;
+        rdfs:range   :Category .
+
+:Corredor1-8  a   :Walkable , owl:NamedIndividual ;
+        :floor    1 ;
+        :leftOf   :Elevador1 ;
+        :rightOf  :Corredor1-7 .
+
+:Base_Mary_Kay  a     :Product , owl:NamedIndividual ;
+        rdfs:label    "Base Mary Kay" ;
+        :hasCategory  :Maquiagem ;
+        :price        "29.9"^^xsd:double .
+
+:Loja1-2.1  a       :Walkable , owl:NamedIndividual ;
+        :belongsTo  :Xiaomi ;
+        :bottomOf   :Loja1-2.2 ;
+        :floor      1 ;
+        :rightOf    :Corredor1-3 .
+
+:Corredor2-2  a  :Walkable , owl:NamedIndividual ;
+        :floor  2 .
+
+:Parede1-4  a      :Obstacle , owl:NamedIndividual ;
+        :bottomOf  :Loja1-2.1 ;
+        :floor     1 .
+
+:Walkable  a             owl:Class ;
+        rdfs:comment     "Chao em geral, que pode pertencer ao interior de uma loja" ;
+        rdfs:subClassOf  :Space .
+
+:Corredor1-2  a  :Walkable , owl:NamedIndividual ;
+        :floor  1 .
+
+:Loja1-1.1  a       :Walkable , owl:NamedIndividual ;
+        :belongsTo  :Americanas ;
+        :bottomOf   :Loja1-1.2 ;
+        :floor      1 ;
+        :leftOf     :Corredor1-4 ;
+        :topOf      :Parede1-5 .
+
+:Xiaomi_Mi9  a        :Product , owl:NamedIndividual ;
+        rdfs:label    "Xiaomi Mi9" ;
+        :hasCategory  :Celular ;
+        :price        "989.99"^^xsd:double .
+
+:CommercialCenter  a     owl:Class ;
+        rdfs:comment     "Local que sera utilizado como base para guiar o usuario ate uma loja" ;
+        rdfs:subClassOf  :Walkable .
+
+:Escrivaninha_de_Madeira
+        a             :Product , owl:NamedIndividual ;
+        rdfs:label    "Escrivaninha de Madeira" ;
+        :hasCategory  :Moveis ;
+        :price        "599.79"^^xsd:double .
+
+:telephone  a        owl:DatatypeProperty ;
+        rdfs:domain  :Store ;
+        rdfs:range   xsd:string .
+
+:Corredor2-7  a     :Walkable , owl:NamedIndividual ;
+        :belongsTo  :McDonalds ;
+        :floor      2 .
+
+:Parede2-3  a      :Obstacle , owl:NamedIndividual ;
+        :bottomOf  :Corredor2-3 ;
+        :floor     2 ;
+        :leftOf    :Parede2-4 .
+
+:Space  a             owl:Class ;
+        rdfs:comment  "Unidade de espaco, sera utilizada para a navegacao" .
+
+:Corredor1-7  a  :Walkable , owl:NamedIndividual ;
+        :floor  1 .
+
+:Comida  a          :Category , owl:NamedIndividual ;
+        rdfs:label  "Comida" .
+
+:likes  a            owl:ObjectProperty ;
+        rdfs:domain  :User ;
+        rdfs:range   :Category .
+
+:Corredor2-1  a    :Walkable , owl:NamedIndividual ;
+        :bottomOf  :Corredor2-4 ;
+        :floor     2 ;
+        :leftOf    :Corredor2-2 .
+
+:Parede1-3  a      :Obstacle , owl:NamedIndividual ;
+        :bottomOf  :Corredor1-3 ;
+        :floor     1 ;
+        :leftOf    :Parede1-4 .
+
+:sells  a            owl:ObjectProperty ;
+        rdfs:domain  :Store ;
+        rdfs:range   :Product .
+
+:Camiseta_GNU  a      :Product , owl:NamedIndividual ;
+        rdfs:label    "Camiseta GNU" ;
+        :hasCategory  :Roupa ;
+        :price        "99.99"^^xsd:double .
+
+:Fonte2-1  a       :Obstacle , owl:NamedIndividual ;
+        :bottomOf  :Corredor2-7 ;
+        :floor     2 ;
+        :leftOf    :Corredor2-5 ;
+        :rightOf   :Corredor2-4 ;
+        :topOf     :Corredor2-2 .
+
+:Corredor1-1  a    :Walkable , owl:NamedIndividual ;
+        :bottomOf  :Corredor1-4 ;
+        :floor     1 ;
+        :leftOf    :Corredor1-2 .
+
+:Elevador2  a   :Gateway , owl:NamedIndividual ;
+        :floor  2 .
+
+<http://www.semanticweb.org/hozer/ontologies/2019/9/untitled-ontology-2>
+        a       owl:Ontology .
+
+:belongsTo  a        owl:FunctionalProperty , owl:ObjectProperty ;
+        rdfs:domain  :Walkable ;
+        rdfs:range   :Store .
+
+:Fonte1-1  a       :Obstacle , owl:NamedIndividual ;
+        :bottomOf  :Corredor1-7 ;
+        :floor     1 ;
+        :leftOf    :Corredor1-5 ;
+        :rightOf   :Corredor1-4 ;
+        :topOf     :Corredor1-2 .
+
+:leftOf  a             owl:FunctionalProperty , owl:InverseFunctionalProperty , owl:ObjectProperty ;
+        rdfs:domain    :Space ;
+        rdfs:range     :Space ;
+        owl:inverseOf  :rightOf .
+
+:Roupa  a           :Category , owl:NamedIndividual ;
+        rdfs:label  "Roupa" .
+
+:rightOf  a          owl:FunctionalProperty , owl:InverseFunctionalProperty , owl:ObjectProperty ;
+        rdfs:domain  :Space ;
+        rdfs:range   :Space .
+
+:Corredor2-6  a  :Walkable , owl:NamedIndividual ;
+        :floor   2 ;
+        :leftOf  :Corredor2-7 .
+
+:Patinete_Eletrico  a  :Product , owl:NamedIndividual ;
+        rdfs:label    "Patinete Eletrico" ;
+        :hasCategory  :Eletronicos ;
+        :price        "2119.99"^^xsd:double .
+
+:Parede2-2  a      :Obstacle , owl:NamedIndividual ;
+        :bottomOf  :Corredor2-1 ;
+        :floor     2 ;
+        :leftOf    :Parede2-CC .
+
+:Corredor1-6  a  :Walkable , owl:NamedIndividual ;
+        :floor   1 ;
+        :leftOf  :Corredor1-7 .
+
+:Parede1-2  a      :Obstacle , owl:NamedIndividual ;
+        :bottomOf  :Corredor1-1 ;
+        :floor     1 ;
+        :leftOf    :Shopping_Ibirapuera .
+
+:Xiaomi  a          :Store , owl:NamedIndividual ;
+        rdfs:label  "Xiaomi" ;
+        :sells      :Patinete_Eletrico , :Xiaomi_Mi9 ;
+        :telephone  "1156891245" ;
+        :website    "www.xiaomi.ch" .
+
+:floor  a            owl:DatatypeProperty , owl:FunctionalProperty ;
+        rdfs:domain  :Space ;
+        rdfs:range   xsd:integer .
+
+:Elevador1  a      :Gateway , owl:NamedIndividual ;
+        :connects  :Elevador2 ;
+        :floor     1 .
+
+:Product  a           owl:Class ;
+        rdfs:comment  "Produto vendido pela loja e pode ser comprado pelo usuario\n" .
+
+:website  a          owl:DatatypeProperty ;
+        rdfs:domain  :Store ;
+        rdfs:range   xsd:string .
+
+:Misso_Ramen  a       :Product , owl:NamedIndividual ;
+        rdfs:label    "Misso Ramen" ;
+        :hasCategory  :Comida ;
+        :price        "44.59"^^xsd:double .
+
+:Store  a       owl:Class .
+
+:Parede2-CC  a     :Obstacle , owl:NamedIndividual ;
+        :bottomOf  :Corredor2-2 ;
+        :floor     2 ;
+        :leftOf    :Parede2-3 .
+
+:Category  a    owl:Class .
+
+:Brenno_Cremonini  a  :User , owl:NamedIndividual ;
+        rdfs:label  "Brenno Cremonini" ;
+        :celphone   "11975996500" ;
+        :cpf        "12345678905" ;
+        :likes      :Comida , :Eletronicos .
+
+:Gendai  a          :Store , owl:NamedIndividual ;
+        rdfs:label  "Gendai" ;
+        :sells      :Misso_Ramen ;
+        :telephone  "1196452378" ;
+        :website    "www.gendai.com" .
+
+:Corredor2-5  a    :Walkable , owl:NamedIndividual ;
+        :bottomOf  :Corredor2-8 ;
+        :floor     2 .
+
+:Parede2-1  a      :Obstacle , owl:NamedIndividual ;
+        :bottomOf  :Parede2-5 ;
+        :floor     2 ;
+        :leftOf    :Parede2-2 .
+
+:Corredor1-5  a    :Walkable , owl:NamedIndividual ;
+        :bottomOf  :Corredor1-8 ;
+        :floor     1 .
+
+:Guilherme_Coppini  a  :User , owl:NamedIndividual ;
+        rdfs:label  "Guilherme Coppini" ;
+        :celphone   "11996547844" ;
+        :cpf        "98765431227" ;
+        :likes      :Maquiagem , :Moveis .
+
+:Parede1-1  a      :Obstacle , owl:NamedIndividual ;
+        :bottomOf  :Parede1-5 ;
+        :floor     1 ;
+        :leftOf    :Parede1-2 .
+
+:celphone  a         owl:DatatypeProperty ;
+        rdfs:domain  :User ;
+        rdfs:range   xsd:string .

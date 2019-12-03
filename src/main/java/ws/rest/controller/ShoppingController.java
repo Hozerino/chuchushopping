@@ -1,6 +1,7 @@
 package ws.rest.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,10 +23,12 @@ public class ShoppingController {
 
     private final SpaceService spaceService;
     private final UserService userService;
+    private final ObjectMapper objectMapper;
 
-    public ShoppingController(SpaceService spaceService, UserService userService) {
+    public ShoppingController(SpaceService spaceService, UserService userService, ObjectMapper objectMapper) {
         this.spaceService = spaceService;
         this.userService = userService;
+        this.objectMapper = objectMapper;
     }
 
     @GetMapping("/sparql")
@@ -37,6 +40,11 @@ public class ShoppingController {
     public String getStores() {
         String response = OntologyUtil.sparql("SELECT ?loja WHERE {[a :Store; rdfs:label ?loja]}");
         return response;
+    }
+
+    @GetMapping("/users/{cpf}")
+    public User getUserByCPF(@PathVariable String cpf) {
+        return userService.getUserByCPF(cpf).get();
     }
 
     @PostMapping("/users")
