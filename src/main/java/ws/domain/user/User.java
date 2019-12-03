@@ -3,6 +3,7 @@ package ws.domain.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class User {
@@ -10,8 +11,8 @@ public class User {
     @JsonProperty
     private String name;
 
-    @JsonProperty(
-            "CPF")
+    @JsonProperty("cpf")
+    @NotNull
     private String cpf;
 
     @JsonProperty
