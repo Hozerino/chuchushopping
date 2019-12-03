@@ -36,7 +36,7 @@ public class UserRepositoryImpl implements UserRepository {
     public User save(User user) {
         OntModel ontModel = getUserOntModel();
 
-        user.setName(user.getName().replace(" ", "_"));
+        user.setName(user.getName().replaceAll(" ", "_"));
 
         List<Property> props = OntologyUtil.getUserProperties();
 
