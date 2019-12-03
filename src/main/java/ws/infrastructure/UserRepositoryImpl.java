@@ -36,6 +36,8 @@ public class UserRepositoryImpl implements UserRepository {
     public User save(User user) {
         OntModel ontModel = getUserOntModel();
 
+        user.setName(user.getName().replace(" ", "_"));
+
         List<Property> props = OntologyUtil.getUserProperties();
 
         OntClass userClass = ontModel.getOntClass(OntologyUtil.schema + "User");
@@ -117,7 +119,12 @@ public class UserRepositoryImpl implements UserRepository {
             queryResults.forEach(res -> {
                 try {
                     JsonNode node = objectMapper.readTree(res);
-                    node.get("results").get("bindings").findValues("name").forEach(jsonNode -> recommendations.add(jsonNode.get("value").asText()));
+                    node.get("results").get("bindings").findValues("name").forEach(jsonNode -> {
+                        String recommendation = jsonNode.get("value").asText();
+                        if (!recommendations.contains(recommendation)) {
+                            recommendations.add(recommendation);
+                        }
+                    });
                 } catch (JsonProcessingException e) {
                     e.printStackTrace();
                 }
@@ -150,7 +157,7 @@ public class UserRepositoryImpl implements UserRepository {
         return ans;
     }
 
-    public OntModel getUserOntModel() {
+    private OntModel getUserOntModel() {
         InputStream in = FileManager.get().open("src/main/resources/user.ttl");
         OntModel ontModel = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM);
         ontModel.read(in, OntologyUtil.schema, "TURTLE");
