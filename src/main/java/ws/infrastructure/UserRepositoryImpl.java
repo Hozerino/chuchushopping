@@ -64,7 +64,7 @@ public class UserRepositoryImpl implements UserRepository {
             }
         });
 
-        OntologyUtil.writeData(ontModel);
+        OntologyUtil.writeData(ontModel, "src/main/resources/user.ttl");
 
         return user;
     }

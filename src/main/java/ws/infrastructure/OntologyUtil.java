@@ -190,8 +190,8 @@ public class OntologyUtil {
         return model.getResource(schema + name);
     }
 
-    static void writeData(OntModel ontModel) {
-        try (OutputStream out = new FileOutputStream("src/main/resources/user.ttl")) {
+    static void writeData(OntModel ontModel, String path) {
+        try (OutputStream out = new FileOutputStream(path)) {
             ontModel.write(out, "TURTLE");
             out.flush();
         } catch (Exception e) {
