@@ -1,20 +1,27 @@
 package ws.rest.controller;
 
+import java.util.List;
+import java.util.Optional;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import ws.domain.space.SpaceService;
+import ws.domain.user.User;
 import ws.domain.user.UserService;
 import ws.infrastructure.OntologyUtil;
 import ws.rest.request.LoginRequest;
 import ws.rest.response.PathResponse;
 import ws.rest.response.SpaceResponse;
-import ws.domain.user.User;
-
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")

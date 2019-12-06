@@ -1,15 +1,5 @@
 package ws.domain.space;
 
-import org.apache.jena.ontology.Individual;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.Property;
-import org.apache.jena.rdf.model.Resource;
-import org.springframework.stereotype.Service;
-import ws.infrastructure.OntologyUtil;
-import ws.rest.response.PathResponse;
-import ws.rest.response.SpaceResponse;
-
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -19,6 +9,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
+import javax.annotation.PostConstruct;
+
+import org.apache.jena.ontology.Individual;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.Resource;
+import org.springframework.stereotype.Service;
+import ws.infrastructure.OntologyUtil;
+import ws.rest.response.PathResponse;
+import ws.rest.response.SpaceResponse;
 
 @Service
 public class SpaceService {

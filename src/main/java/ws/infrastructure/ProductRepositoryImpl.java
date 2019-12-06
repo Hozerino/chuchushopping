@@ -1,21 +1,19 @@
 package ws.infrastructure;
 
+import java.io.InputStream;
+import java.util.List;
+
 import org.apache.jena.ontology.Individual;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.ontology.OntModelSpec;
 import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Property;
-import org.apache.jena.rdf.model.RDFNode;
-import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.util.FileManager;
 import org.apache.jena.vocabulary.RDFS;
 import org.springframework.stereotype.Component;
 import ws.domain.product.Product;
 import ws.domain.product.ProductRepository;
-
-import java.io.InputStream;
-import java.util.List;
 
 @Component
 public class ProductRepositoryImpl implements ProductRepository {

@@ -1,10 +1,9 @@
 package ws.domain.user;
 
+import java.util.List;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import javax.validation.constraints.NotNull;
-import java.util.List;
 
 public class User {
 

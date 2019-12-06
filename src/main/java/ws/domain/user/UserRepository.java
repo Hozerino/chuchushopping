@@ -1,9 +1,9 @@
 package ws.domain.user;
 
-import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.stereotype.Component;
 
 @Component
 public interface UserRepository {

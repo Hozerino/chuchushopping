@@ -1,5 +1,10 @@
 package ws.infrastructure;
 
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,11 +22,6 @@ import org.springframework.stereotype.Component;
 import ws.domain.user.User;
 import ws.domain.user.UserRepository;
 import ws.exception.UserNotFoundException;
-
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Component
 public class UserRepositoryImpl implements UserRepository {

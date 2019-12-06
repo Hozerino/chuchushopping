@@ -1,14 +1,14 @@
 package ws.domain.user;
 
+import java.util.List;
+import java.util.Optional;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 import ws.exception.InvalidPasswordException;
 import ws.exception.UserAlreadyExistsException;
 import ws.exception.UserNotFoundException;
 import ws.rest.request.LoginRequest;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {

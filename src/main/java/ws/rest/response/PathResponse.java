@@ -1,10 +1,10 @@
 package ws.rest.response;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import ws.domain.space.Space;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import ws.domain.space.Space;
 
 public class PathResponse {
     @JsonProperty
