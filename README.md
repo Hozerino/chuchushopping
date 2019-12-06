@@ -8,3 +8,4 @@ Como isso não foi feito (e a URI do ws.ttl daria um erro 404), a user.ttl possu
 - Replicar a ideia acima para o product.ttl;
 - Apesar de estar implementado no BackEnd, o FrontEnd não mostra a quantidade dos produtos em estoque e não possui um incremento/decremento;
 - Tudo seria mais simples caso fosse utilizado o SparQL no lugar da API do Jena, porém a ideia deste EP é justamente "explorar" a API e tirar o máximo dela.
+- Utilizar PreparedStatments para construir queries SparQL com parâmetros, evitando SparQL injection (https://morelab.deusto.es/code_injection/files/sparql_injection.pdf).
