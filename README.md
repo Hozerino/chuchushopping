@@ -1,6 +1,10 @@
 ### Como rodar o projeto:
-Abra o terminal na pasta root (chuchushopping/) e execute:
+1) Abra o terminal na pasta root (chuchushopping/) e execute:
 `$ ./gradlew bootRun`
+
+2) Abra seu navegador e acesse a URL `localhost:8080/` que vocÊ será redirecionado à página index.html
+
+3) Para navegar no ChuChuShopping, você pode usar o menu da NavBar que fica na parte superior direita das páginas
 
 ### Pontos de melhoria (não deu tempo de fazer)
 - Deixar o ws.ttl como um arquivo servido estaticamente e referenciá-lo na ontologia do user.ttl, que seria utilizada apenas para armazenar usuários;
