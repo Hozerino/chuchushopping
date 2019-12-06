@@ -81,7 +81,7 @@ public class ShoppingController {
     public String getStoreByLabel(@PathVariable("label") String label) {
         // ia fazer o bagulho pra evitar SparQL injection
         // https://morelab.deusto.es/code_injection/files/sparql_injection.pdf
-        // mas a gente ta liberando endpoint de sparql entao dane-se
+        // mas a gente ta liberando endpoint de sparql entao meio que tanto faz
 
         return OntologyUtil.sparql(String.format("SELECT ?telefone ?website\n" +
                 "WHERE {\n" +
